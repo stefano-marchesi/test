@@ -1,0 +1,8 @@
+proxy:
+  build: r-p/.
+  ports:
+   - "80:80"
+server:
+  build: server/.
+  ports:
+   - "3000:3000"
