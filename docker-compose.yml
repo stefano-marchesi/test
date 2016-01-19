@@ -1,8 +1,30 @@
 proxy:
+  container_name: proxy
   build: r-p/.
   ports:
-   - "80:80"
+   - "8080:80"
 server:
+  container_name: server
   build: server/.
+  net: "ospedale"
   ports:
    - "3000:3000"
+
+cillcomm:
+  container_name: CillComm
+  build: CillComm/.
+  net: "ospedale"
+  expose:
+    - "80"
+cafcomm:
+  container_name: CafComm
+  build: CafComm/.
+  net: "ospedale"
+  expose:
+    - "80"
+internal:
+  container_name: Internal
+  build: Internal/.
+  net: "ospedale"
+  expose:
+    - "80"
