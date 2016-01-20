@@ -1,0 +1,123 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../behaviors/config-behavior.html">
+<dom-module id="input-nre">
+  <template>
+  <style>
+  :host {
+    display: block;
+    @apply(--page-theme);
+  }
+
+  .invisible{
+    display: none;
+  }
+  </style>
+
+  <iron-ajax
+  id="verificanre"
+  method="POST"
+  content-type="application/json"
+  handle-as="json"
+  on-response="responserecived"
+  last-response="{{datanre}}"></iron-ajax>
+
+  <paper-input
+  id="inputnre"
+  label="Codice ricetta"
+  value="{{nre}}"
+  char-counter maxlength="5"
+  auto-validate pattern="[0-9]*"
+  allowed-pattern="[0-9]"
+  error-message="inserire un codice valido (5 numeri) "
+  minlength="5"
+  ></paper-input>
+
+  <paper-input
+  id="inputcf"
+  label="Codice fiscale"
+  value="{{cf}}"
+  char-counter maxlength="5"
+  auto-validate pattern="[0-9]*"
+  allowed-pattern="[0-9]"
+  error-message="inserire un codice valido (5 numeri) "
+  minlength="5"
+  ></paper-input>
+
+  <paper-button on-tap="verify" raised>Verifica dati</paper-button>
+
+  <paper-spinner-lite class="invisible" id="spinner" alt="Loading contacts list" active></paper-spinner-lite>
+
+</template>
+<script>
+(function() {
+  'use strict';
+
+  Polymer({
+    is: 'input-nre',
+    behaviors: [MyBehaviors.Config],
+    properties: {
+
+      status: {
+        type: Number,
+        notify: true,
+        observer: 'statusChange'
+      },
+      nre: {
+        type: String,
+        notify: true,
+        value:'23456'
+      },
+
+      cf: {
+        type: String,
+        notify: true,
+        value:'23456'
+      },
+      datanre:{
+        type: Object
+      }
+    },
+
+    statusChange: function(newValue) {
+      switch (newValue) {
+        case 3:
+        this.$.spinner.toggleClass('invisible', false);
+        this.$.inputnre.toggleAttribute('disabled', true);
+        this.$.inputcf.toggleAttribute('disabled', true);
+        break;
+        default:
+          this.$.spinner.toggleClass('invisible', true);
+          this.$.inputnre.toggleAttribute('disabled', false);
+          this.$.inputcf.toggleAttribute('disabled', false);
+      }
+    },
+    attached: function(){
+     this.$.verificanre.url=this.baseUrl+':3000/cill/verifynre';
+    },
+    computeBody: function(){
+      return {nre: this.nre, cf : this.cf};
+    },
+    verify:function(){
+      this.$.verificanre.body={nre: this.nre, cf : this.cf};
+      this.$.verificanre.generateRequest();
+      this.status=3;
+    },
+
+    responserecived: function(){
+
+      this.status=10;
+    }
+  });
+})();
+</script>
+</dom-module>

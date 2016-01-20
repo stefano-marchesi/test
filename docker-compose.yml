@@ -2,7 +2,7 @@ proxy:
   container_name: proxy
   build: r-p/.
   ports:
-   - "8080:80"
+   - "80:80"
 server:
   container_name: server
   build: server/.
