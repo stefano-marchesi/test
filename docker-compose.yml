@@ -1,6 +1,6 @@
-proxy:
-  container_name: proxy
-  build: r-p/.
+nodeproxy:
+  container_name: nodeproxy
+  build: static/.
   ports:
    - "80:80"
 server:

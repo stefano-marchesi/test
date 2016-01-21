@@ -14,8 +14,12 @@
   },
   "dependencies": {
     "body-parser": "^1.14.2",
+    "compression": "^1.6.0",
     "cors": "^2.7.1",
+    "ejs": "^2.3.4",
     "express": "^4.13.3",
-    "http": "0.0.0"
+    "html": "0.0.10",
+    "http": "0.0.0",
+    "serve-static": "^1.10.1"
   }
 }
