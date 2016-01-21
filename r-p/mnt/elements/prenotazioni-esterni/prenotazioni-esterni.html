@@ -13,115 +13,124 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="prenotazioni-esterni">
   <template>
 
-  <style>
-  :host {
-    display: block;
+    <style>
+    :host {
+      display: block;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-justified);
+      height: 100%;
+      max-height: 700px;
+    };
+    paper-material{
+      max-width: 600px;
 
-  };
-  paper-material {
-    @apply(--app-paper-material-theme);
-    max-width: 600px;
-    min-height: 500px;
-    @apply(--layout-vertical);
-  };
-
-
-  </style>
-  <paper-material elevation="1">
-
-    <paper-toolbar>
-      <div class="title">Prenotazioni Radiologia Biella</div>
-      <paper-icon-button raised icon="chevron-left" on-tap="prev"></paper-icon-button>
-      <paper-icon-button  raised icon="chevron-right" on-tap="next"></paper-icon-button>
-    </paper-toolbar>
-
-    <neon-animated-pages selected="[[selected]]">
-
-      <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
-      <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
-      <input-date id="inputdate" status="{{dateStatus}}" ></input-date>
-      <output-confermation></output-confermation>
-
-    </neon-animated-pages>
-
-  </paper-material>
-</template>
-<script>
-(function() {
-  'use strict';
-
-  Polymer({
-    is: 'prenotazioni-esterni',
-
-    properties: {
-      selected:{
-        type: Number,
-        value: 0
-      },
-      nreStatus:{
-        type: Number,
-        observer: 'nreStatusChange',
-        value: 1
-      },
-      connectionStatus:{
-        type: Number,
-        observer: 'connectionStatusChange',
-        value: 1
-      },
-      dateStatus:{
-        type: Number,
-        observer: 'dateStatusChange',
-        value: 1
-      },
-
-      transactioninfo:{
-        type:Object,
-        value: function (){
-          return {
-            nre:'',
-            cf:'',
-            mail:'',
-            datanre:{},
-            chosendate:{}
-          };
-        }
-      }
-
-    },
-    nreStatusChange: function(newValue) {
-
-      if  (newValue===10){
-        this.transactioninfo.nre = this.$.inputnre.nre;
-        this.transactioninfo.cf = this.$.inputnre.cf;
-        this.transactioninfo.datanre = this.$.inputnre.datanre;
-        this.selected=1;
-      }
-    },
-
-    connectionStatusChange: function(newValue) {
-      if  (newValue===10){
-        this.transactioninfo.mail = this.$.inputmail.mail;
-        this.selected=2;
-        this.$.inputdate.esame=this.transactioninfo.datanre.esame;
-        this.dateStatus=2;
-      }
-    },
-
-    dateStatusChange: function(newValue) {
-      if  (newValue===10){
-        this.transactioninfo.chosendate = this.$.inputdate.chosendate;
-        this.selected=3;
-      }
-    },
-
-    next:function() {
-      this.selected ++;
-    },
-
-    prev:function() {
-      this.selected --;
+      @apply(--layout-flex);
     }
-  });
-})();
-</script>
+
+    @media all and (min-width: 600px){
+      paper-material{
+        margin-top: 20px;
+      }
+    }
+
+    </style>
+
+    <paper-material elevation="2">
+
+      <paper-toolbar>
+        <div class="title">Prenotazioni Radiologia Biella</div>
+        <paper-icon-button raised icon="chevron-left" on-tap="prev"></paper-icon-button>
+        <paper-icon-button  raised icon="chevron-right" on-tap="next"></paper-icon-button>
+      </paper-toolbar>
+
+      <iron-pages class="content" selected="[[selected]]" >
+        <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
+        <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
+        <input-date id="inputdate" status="{{dateStatus}}" ></input-date>
+        <output-confermation></output-confermation>
+
+      </iron-pages>
+
+    </paper-material>
+
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'prenotazioni-esterni',
+
+      properties: {
+        selected:{
+          type: Number,
+          value: 0
+        },
+        nreStatus:{
+          type: Number,
+          observer: 'nreStatusChange',
+          value: 1
+        },
+        connectionStatus:{
+          type: Number,
+          observer: 'connectionStatusChange',
+          value: 1
+        },
+        dateStatus:{
+          type: Number,
+          observer: 'dateStatusChange',
+          value: 1
+        },
+
+        transactioninfo:{
+          type:Object,
+          value: function (){
+            return {
+              nre:'',
+              cf:'',
+              mail:'',
+              datanre:{},
+              chosendate:{}
+            };
+          }
+        }
+
+      },
+      nreStatusChange: function(newValue) {
+
+        if  (newValue===10){
+          this.transactioninfo.nre = this.$.inputnre.nre;
+          this.transactioninfo.cf = this.$.inputnre.cf;
+          this.transactioninfo.datanre = this.$.inputnre.datanre;
+          this.selected=1;
+        }
+      },
+
+      connectionStatusChange: function(newValue) {
+        if  (newValue===10){
+          this.transactioninfo.mail = this.$.inputmail.mail;
+          this.selected=2;
+          this.$.inputdate.esame=this.transactioninfo.datanre.esame;
+          this.dateStatus=2;
+        }
+      },
+
+      dateStatusChange: function(newValue) {
+        if  (newValue===10){
+          this.transactioninfo.chosendate = this.$.inputdate.chosendate;
+          this.selected=3;
+        }
+      },
+
+      next:function() {
+        this.selected ++;
+      },
+
+      prev:function() {
+        this.selected --;
+      }
+    });
+  })();
+  </script>
 </dom-module>

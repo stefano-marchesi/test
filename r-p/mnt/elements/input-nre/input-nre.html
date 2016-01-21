@@ -11,16 +11,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../behaviors/config-behavior.html">
 <dom-module id="input-nre">
+<style is="custom-style" include="shared-styles"></style>
   <template>
   <style>
   :host {
     display: block;
-    @apply(--page-theme);
+    margin: 10px;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+
   }
 
   .invisible{
     display: none;
   }
+
+  .title{
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .advance-to-mail{
+    margin-top: 20px;
+
+  }
+
+  paper-input{
+    @apply(--layout-flex);
+  }
+  .spinner{
+    margin-top: 40px;
+  }
+
+  paper-fab{
+    background-color: green;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
   </style>
 
   <iron-ajax
@@ -31,31 +59,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   on-response="responserecived"
   last-response="{{datanre}}"></iron-ajax>
 
-  <paper-input
-  id="inputnre"
-  label="Codice ricetta"
-  value="{{nre}}"
-  char-counter maxlength="5"
-  auto-validate pattern="[0-9]*"
-  allowed-pattern="[0-9]"
-  error-message="inserire un codice valido (5 numeri) "
-  minlength="5"
-  ></paper-input>
+  <h3 class="title">
+    Insetitre il codice N.R.E. e il codice fiscale
+  </h3>
 
-  <paper-input
-  id="inputcf"
-  label="Codice fiscale"
-  value="{{cf}}"
-  char-counter maxlength="5"
-  auto-validate pattern="[0-9]*"
-  allowed-pattern="[0-9]"
-  error-message="inserire un codice valido (5 numeri) "
-  minlength="5"
-  ></paper-input>
+  <div class="layout horizontal">
+    <paper-fab mini icon="add" on-tap="addnre"></paper-fab>
+    <paper-input
+    id="inputnre"
+    label="Codice ricetta"
+    value="{{nre}}"
+    char-counter maxlength="15"
+    auto-validate pattern="[0-9a-zA-Z]*"
+    allowed-pattern="[0-9a-zA-Z]"
+    error-message="inserire un codice valido (15 caratteri) "
+    minlength="15"
 
-  <paper-button on-tap="verify" raised>Verifica dati</paper-button>
+    ></paper-input>
+  </div>
+  <div class="layout horizontal">
+    <paper-fab mini icon="add" on-tap="addcf"></paper-fab>
+    <paper-input
+    id="inputcf"
+    label="Codice fiscale"
+    value="{{cf}}"
+    char-counter maxlength="16"
+    auto-validate pattern="[0-9a-zA-Z]*"
+    allowed-pattern="[0-9a-zA-Z]"
+    error-message="inserire un codice valido (16 caratteri) "
+    minlength="16"
 
-  <paper-spinner-lite class="invisible" id="spinner" alt="Loading contacts list" active></paper-spinner-lite>
+    ></paper-input>
+  </div>
+  <div class="advance-to-mail">
+    <paper-button id="advancebutton" on-tap="verify" class="primary" raised>Verifica dati</paper-button>
+  </div>
+
+  <div class="spinner layout flex">
+    <paper-spinner-lite class="invisible" id="spinner" alt="Loading contacts list" active></paper-spinner-lite>
+
+  </div>
 
 </template>
 <script>
@@ -75,17 +118,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       nre: {
         type: String,
         notify: true,
-        value:'23456'
+        value:'',
+        observer: 'datachange'
       },
 
       cf: {
         type: String,
         notify: true,
-        value:'23456'
+        value:'',
+        observer: 'datachange'
       },
       datanre:{
         type: Object
       }
+    },
+
+    addnre: function(){
+      this.nre = '010A24068905859';
+    },
+
+    addcf: function(){
+      this.cf = 'FGAMGD46A52A784G';
+    },
+
+
+    datachange:function(){
+
+
+      if ( this.$.inputnre.validate() && this.$.inputcf.validate()  && this.nre!=='' && this.cf!=='' ){
+        this.$.advancebutton.toggleAttribute('disabled', false);
+      }else{this.$.advancebutton.toggleAttribute('disabled', true);}
     },
 
     statusChange: function(newValue) {
@@ -96,13 +158,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.inputcf.toggleAttribute('disabled', true);
         break;
         default:
-          this.$.spinner.toggleClass('invisible', true);
-          this.$.inputnre.toggleAttribute('disabled', false);
-          this.$.inputcf.toggleAttribute('disabled', false);
+        this.$.spinner.toggleClass('invisible', true);
+        this.$.inputnre.toggleAttribute('disabled', false);
+        this.$.inputcf.toggleAttribute('disabled', false);
+        this.$.advancebutton.toggleAttribute('disabled', true);
       }
     },
     attached: function(){
-     this.$.verificanre.url=this.baseUrl+':3000/cill/verifynre';
+      this.$.verificanre.url=this.baseUrl+':3000/cill/verifynre';
     },
     computeBody: function(){
       return {nre: this.nre, cf : this.cf};

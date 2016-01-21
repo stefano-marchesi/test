@@ -11,14 +11,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="input-connection">
+<style is="custom-style" include="shared-styles"></style>
   <template>
+
   <style>
   :host {
     display: block;
-    @apply(--page-theme);
+
+    margin: 10px;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+    @apply(layout-around-justified);
   }
   .invisible{
     display: none;
+  }
+
+  .title{
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  paper-fab{
+    background-color: green;
+    margin-top: 10px;
+    margin-right: 10px;
   }
   </style>
 
@@ -37,34 +54,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   handle-as="json"
   on-response="verified"
   last-response="{{dates}}"></iron-ajax>
+  <h3 class="title">
+    Inseritre Email e verificarla
+  </h3>
+
 
   <div class="layout horizontal">
+    <paper-fab mini icon="add" on-tap="addmail"></paper-fab>
     <gold-email-input
     id="emailinput"
     auto-validate
     label="email"
-    value="{{mail}}">
-  </gold-email-input>
-
-  <paper-button id="emailinputbutton" on-tap="sendmail" raised>invia Email</paper-button>
+    value="{{mail}}"
+    required></gold-email-input>
+  </div>
+  <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner"  active></paper-spinner-lite>
-</div>
 
-<div class="layout horizontal">
-  <paper-input
-  id="authcode"
-  label="Codice Conferma"
-  value="{{pin}}"
-  char-counter maxlength="5"
-  auto-validate pattern="[0-9]*"
-  allowed-pattern="[0-9]"
-  error-message="inserire un codice valido (5 numeri) "
-  minlength="5"
-  ></paper-input>
 
-  <paper-button id="authcodebutton"on-tap="verify" raised>Conferma</paper-button>
+  <div class="layout horizontal">
+    <paper-fab mini icon="add" on-tap="addpin"></paper-fab>
+    <paper-input
+    id="authcode"
+    label="Codice Conferma"
+    value="{{pin}}"
+    char-counter maxlength="5"
+    auto-validate pattern="[0-9]*"
+    allowed-pattern="[0-9]"
+    error-message="inserire un codice valido (5 numeri) "
+    minlength="5"
+    required
+    ></paper-input>
+  </div>
+  <paper-button id="authcodebutton"on-tap="verify" class="primary" raised>Conferma</paper-button>
   <paper-spinner-lite class="invisible" id="authcodespinner"  active></paper-spinner-lite>
-</div>
+
 
 </template>
 <script>
@@ -82,25 +106,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       mail: {
         type: String,
-        value: 'stefa@marchesi.com',
-        notify: true
+        value: '',
+        notify: true,
+        observer: 'mailchange'
       },
       pin:{
         type: String,
-        value: '16543',
-        notify: true
+        value: '',
+        notify: true,
+        observer: 'pinchange'
       }
     },
 
+    mailchange:function(){
+      if ( this.$.emailinput.validate() ){
+        this.$.emailinputbutton.toggleAttribute('disabled', false);
+      }else{this.$.emailinputbutton.toggleAttribute('disabled', true);}
+    },
+
+    pinchange:function(){
+      if ( this.$.authcode.validate() ){
+        this.$.authcodebutton.toggleAttribute('disabled', false);
+      }else{this.$.authcodebutton.toggleAttribute('disabled', true);}
+    },
+
+    addmail: function(){
+      this.mail = 'stefa@marchesi.com';
+    },
+
+    addpin: function(){
+      this.pin = '16543';
+    },
     statusChange: function(newValue) {
       switch (newValue) {
         case 1:
         this.$.emailinput.toggleAttribute('disabled', false);
-        this.$.emailinputbutton.toggleAttribute('disabled', false);
+        this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', true);
         this.$.authcode.toggleAttribute('disabled', true);
         this.$.authcodebutton.toggleAttribute('disabled', true);
         this.$.authcodespinner.toggleClass('invisible', true);
+        this.$.emailinput.focus();
         break;
 
         case 2:
@@ -117,8 +163,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', true);
         this.$.authcode.toggleAttribute('disabled', false);
-        this.$.authcodebutton.toggleAttribute('disabled', false);
+        this.$.authcodebutton.toggleAttribute('disabled', true);
         this.$.authcodespinner.toggleClass('invisible', true);
+        this.$.authcode.focus();
         break;
 
         case 4:
@@ -131,7 +178,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         break;
 
         default:
+        this.$.emailinput.toggleAttribute('disabled', false);
+        this.$.emailinputbutton.toggleAttribute('disabled', false);
+        this.$.emailinputspinner.toggleClass('invisible', true);
         this.$.authcode.toggleAttribute('disabled', true);
+        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcodespinner.toggleClass('invisible', true);
       }
     },
     verify:function(){
