@@ -1,0 +1,280 @@
+
+<h1>ciao cugina</h1>
+<span>
+  Scusami se ti scrivo questo testo solo ora.<br>
+  Il lavoro che vorrei tu facessi e quello di capire in modo approfondito e dettagliato come interagire con i web service che ci interessano.
+  Mi rendo conto che non e una job description molto chiara, ma capirai meglio cosa intendo con l'esempio del CILL.<br></span>
+
+  <h1>Parlare con il CILL</h1>
+
+  <span>
+    Il CILL e un web service basato sul linguaggio di scambio di informazioni XML.
+    Io spedisco all cill un file XML con le informazioini sulle mie autorizzazioni e la mia richiesta e lui mi spedisce un file
+    xml con le risposte che cerco o i messaggi di errore. <br>
+    Ora, ovviamente prima di andare oltre tu hai bisogno di capire piu a fondo cos'e XML, altrimenti non sarai in grado di portare a termine il compito.
+  </span>
+
+  <h3>Impariamo l'XML</h3>
+  <span>
+    Per prima cosa l'XML non e un linguaggio di programmazione ma un linguaggio di markup. Un linguaggio di programmazione come il javascript, il C++ o
+    il php esprime una serie di azioni che devono essere portate a termine. Un linguaggio di markup come l'xml invece serve all'unico scopo
+    di trasferire informazioni e "spiegarti" queste informazioni. <br>
+
+    l'Xml utilizza i Tag per "spiegarti" le informazioni e il testo fra i Tag come informazione vera e propria.<br>
+    Il tag e composto da un unica parola compresa tra i segni di minore e maggiore.
+    <br>
+  </span>
+
+  <textarea  style="border:none;width: 100%; margin:10px;">
+    <nome>Stefano</nome>
+  </textarea>
+
+  <span><br>
+
+    Si possono utilizzare piu parole nel tag ma MAI spazi, quindi bisogna utilizzare o dei trattini o giocare con le maiuscole.
+  </span>
+
+  <textarea rows="5" style="border:none;width: 100%; margin:10px;">
+    <nome-cognome>Stefano Marchesi</nome-cognome>
+    <nomeCognome>Stefano Marchesi</nomeCognome>
+  </textarea>
+
+  <span>
+    Come avrai sicuramente notato il tag va aperto prima dell'informazione e chiuso alla fine dell'informazione,
+    questo per evitare ambiguita quando ci troviamo in una situazione di tag all'interno di altri tag. <br>
+    Da ora in poi chiameremo il tag prima dell'informazione "aperto tag" e quello dopo l'informazione "chiuso tag"
+  </span>
+
+
+
+  <textarea rows="15" cols="40" style="border:none;width: 100%; margin:10px;">
+
+    <compilation>
+
+      <canzone>
+        <titolo>Alba chiara</titolo>
+        <autore>Vasco</autore>
+      </canzone>
+
+      <canzone>
+        <titolo>Generale</titolo>
+        <autore>De Gregori</autore>
+      </canzone>
+
+    </compilation>
+  </textarea>
+
+  <span>
+    Cominci a vedere la struttura dei dati, non e vero? <br>
+    I tag possono contenere informazioni aggiuntive sull'informazione principale, queste informazioni aggiuntive si chiamano attributi. <br>
+    Gli attributi devono essere messi SOLO nel "Apreto tag" e mai ripetuti nel "chiuso tag".<br>
+    La sinstassi e semplice: nome dell'attributo, uguale, valore dell'attributo fra virgolette. <br>
+    C'e solo un'ovvia eccezzione:
+    se l'attributo e una variabile booleana (si o no) non serve mettere ne l'uguale ne il valore dell'attributo.
+    Se l'attributo e presente significa si, altrimenti significa no
+
+  </span>
+
+  <textarea rows="10" cols="40" style="border:none;width: 100%; margin:10px;">
+
+    <canzone durata="3:50">
+      <titolo versione"live">Bocca di rosa</titolo>
+      <autore morto>De Andre</autore>
+    </canzone>
+
+  </textarea>
+  <span>
+    Con questo concludo l'infarinatura generale sull'XML. Queste informazioni dovrebbero bastarti per capire buona parte delle
+    comunicazioni con il cill, ma ovviamente piu ne sai e meglio e , quindi ti linko un po' di risorse utili per approfondire l'argomento o
+    per chiarire punti in cui mi sono spiegato male. <br><br>
+    <a href="http://www.w3schools.com/xml/default.asp">Tutorial della W3schools</a>: In inglese. Semplice, conciso e completo. loro sono sempre i migliori!<br>
+    <a href="http://www.html.it/guide/guida-xml-di-base/">Tutorial di HTML.IT</a>: In italiano. Prolisso e moooooolto lungo, ma pensato per andare da zero a esperto a piccoli passi. Se ti trovi in difficolta, passa da qui, oppure chiamami :) <br>
+    <br>
+
+    Cugina, a distanza di tempo e di spazio io posso comunque sentire la tua delusione per un argometo troppo facile, ma stai tranquilla,
+    c'e una difficolta aggiuntiva. Il cill utilizza  l'xmlsoap!!! Niente di esagerato, semplicemente semplicemente chiude tuttol il file xml nel tag s:Envelope
+    o soap:Envelope e divide il blocco di informazioni in due parti chiuse rispettivamente nei tag s:Header e s:Body.  <br>
+    Nell header ci sono informazioni sulla comunicazione: lo schema utilizzato, il tag mustUnderstand e altro, nel body invece cc'e il corpo vero e proprio della comunicazione
+    (NRE, codice fiscale...).<br>
+    per approfondire segui questo link: <br>
+    <a href="http://www.w3schools.com/xml/xml_soap.asp">Tutorial della W3schools</a>: sempre i ragazzi dell w3schools<br>
+  </span>
+
+
+  <h2>La richiesta di informazioni al cill</h2>
+
+  <span>Ora che sei un esperta di xml mettiamo a frutto questa tua conoscenza. <br>
+    Questo e un esempio di file che devo spedire al cill per avere una risposta su un determinato NRE (lo vedi piu facilmente su uno schermo grande, sul cellulare i tag vanno a capo ed e un casino).
+    Sul log che mi hai mandato era tutto sulla stessa linea, io l'ho indentato per renderlo piu chiaro da leggere... Prego, non c'e di che.
+  </span>
+
+  <textarea rows="25" cols="40" style="border:none;width: 100%; margin:10px;">
+
+    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+      <s:Header>
+        <Action s:mustUnderstand="1" xmlns="http://schemas.microsoft.com/ws/2005/05/addressing/none">http://visualizzaerogato.wsdl.dem.sanita.finanze.it/VisualizzaErogato</Action>
+        <ActivityId CorrelationId="0f2730b7-d39f-4b08-bbab-3003211995f2" xmlns="http://schemas.microsoft.com/2004/09/ServiceModel/Diagnostics">d86b5308-1771-42f7-aa26-dda3cf253f72</ActivityId>
+      </s:Header>
+      <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <VisualizzaErogatoRichiesta xmlns="http://visualizzaerogatorichiesta.xsd.dem.sanita.finanze.it">
+          <pinCode>207BAB01</pinCode>
+          <codiceRegioneErogatore>010</codiceRegioneErogatore>
+          <codiceAslErogatore>207</codiceAslErogatore>
+          <codiceSsaErogatore>000000</codiceSsaErogatore>
+          <pwd>Rs0b7H!9</pwd>
+          <nre>010A24068905859</nre>
+          <cfAssistito>FGAMGD46A52A784G</cfAssistito>
+          <tipoOperazione>5</tipoOperazione>
+        </VisualizzaErogatoRichiesta>
+      </s:Body>
+    </s:Envelope>
+
+</textarea>
+
+<span>
+  Dimentica quello che c'e nel tag header, credo che siano informazioni fisse per la conunicazione con il sistema cill,
+  e concentrati sul contenuto del body. questa e la tua area di intervento.<br>
+
+  il primo e unico tag che incontriamo e "VisualizzaErogatoRichiesta" e non contiene informazioni, ma altri tag.
+  Io a questo punto conosco gia l'NRE e il CF (li ho appena chiesti tramite app), ma tutte le altre informazioni mi sono sconosciute....
+  pin code, pwd, vari altri codici.... Queste me le devi trovare tu. o per lo meno trovare il modo di averle
+  (appoggiandoci all'account dell'ospedale, diventtando noi una ditta che puo avere queste info o altro....). <br>
+  Il tag "tipoOperazione" mi incuriosisce.... quanti tipi di operazioni ci sono? non avevo gia determinato il tipo di operazione usando il tag
+   "VisualizzaErogatoRichiesta"? Dubbi su dubbi su dubbi.... che tu risolverai con facilita e maestria fra una lavatrice e un'asciugatrice.
+</span>
+
+  <h2>La Risposta del CILL</h2>
+
+  <textarea rows="75" cols="40" style="border:none;width: 100%; margin:10px;">
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+      <ns2:VisualizzaErogatoRicevuta xmlns:ns2="http://visualizzaerogatoricevuta.xsd.dem.sanita.finanze.it" xmlns="http://visualizzaerogatorichiesta.xsd.dem.sanita.finanze.it" xmlns:ns3="http://tipodati.xsd.dem.sanita.finanze.it">
+        <ns2:nre>010A24068905859</ns2:nre>
+        <ns2:cfMedico1>ZNRNNA78D67B041I</ns2:cfMedico1>
+        <ns2:codRegione>010</ns2:codRegione>
+        <ns2:codASLAo>207</ns2:codASLAo>
+        <ns2:codSpecializzazione>H</ns2:codSpecializzazione>
+        <ns2:testata1>COGNOME_MEDICO=ZANARDI;NOME_MEDICO=ANNA</ns2:testata1>
+        <ns2:testata2>
+        </ns2:testata2>
+        <ns2:codiceAss>FGAMGD46A52A784G</ns2:codiceAss>
+        <ns2:cognNome>FAGA MAGDA</ns2:cognNome>
+        <ns2:indirizzo>VIA FIUME N?37 - 13871 BENNA (BI)</ns2:indirizzo>
+        <ns2:tipoPrescrizione>P</ns2:tipoPrescrizione>
+        <ns2:ricettaInterna>1</ns2:ricettaInterna>
+        <ns2:codEsenzione>E01</ns2:codEsenzione>
+        <ns2:descrizioneDiagnosi>POST PEELING</ns2:descrizioneDiagnosi>
+        <ns2:dataCompilazione>2016-01-11 09:44:50</ns2:dataCompilazione>
+        <ns2:tipoVisita>A</ns2:tipoVisita>
+        <ns2:provAssistito>BI</ns2:provAssistito>
+        <ns2:aslAssistito>207</ns2:aslAssistito>
+        <ns2:classePriorita>P</ns2:classePriorita>
+        <ns2:statoProcesso>5</ns2:statoProcesso>
+        <ns2:ticket>0</ns2:ticket>
+        <ns2:quotaFissa>0</ns2:quotaFissa>
+        <ns2:franchigia>0</ns2:franchigia>
+        <ns2:galDirChiamAltro>0</ns2:galDirChiamAltro>
+        <ns2:ElencoDettagliPrescrVisualErogato>
+          <ns3:DettaglioPrescrizioneVisualErogato>
+            <ns3:statoPresc>1</ns3:statoPresc>
+            <ns3:codProdPrest>95.03.3</ns3:codProdPrest>
+            <ns3:descrProdPrest>A968</ns3:descrProdPrest>
+            <ns3:descrTestoLiberoNote>TRA 3-4 SETTIMANE</ns3:descrTestoLiberoNote>
+            <ns3:quantita>1</ns3:quantita>
+            <ns3:prezzo>0</ns3:prezzo>
+            <ns3:ticketConfezione>0</ns3:ticketConfezione>
+            <ns3:diffGenerico>0</ns3:diffGenerico>
+            <ns3:quantitaErogata>0</ns3:quantitaErogata>
+            <ns3:prezzoRimborso>0</ns3:prezzoRimborso>
+            <ns3:onereProd>0</ns3:onereProd>
+            <ns3:scontoSSN>0</ns3:scontoSSN>
+            <ns3:extraScontoIndustria>0</ns3:extraScontoIndustria>
+            <ns3:extraScontoPayback>0</ns3:extraScontoPayback>
+            <ns3:extraScontoDL31052010>0</ns3:extraScontoDL31052010>
+          </ns3:DettaglioPrescrizioneVisualErogato>
+        </ns2:ElencoDettagliPrescrVisualErogato>
+        <ns2:codAutenticazioneMedico>110120160944439610000466188176</ns2:codAutenticazioneMedico>
+        <ns2:codAutenticazioneErogatore>000085000454811012016094445459</ns2:codAutenticazioneErogatore>
+        <ns2:codEsitoVisualizzazione>0000</ns2:codEsitoVisualizzazione>
+        <ns2:ElencoErroriRicette>
+          <ns3:ErroreRicetta>
+            <ns3:codEsito>0000</ns3:codEsito>
+            <ns3:esito>Operazione eseguita correttamente</ns3:esito>
+            <ns3:progPresc>0</ns3:progPresc>
+            <ns3:tipoErrore>
+            </ns3:tipoErrore>
+          </ns3:ErroreRicetta>
+        </ns2:ElencoErroriRicette>
+        <ns2:ElencoComunicazioni>
+          <ns3:Comunicazione>
+            <ns3:codice>VAL_0001</ns3:codice>
+          </ns3:Comunicazione>
+          <ns3:Comunicazione>
+            <ns3:codice>0000</ns3:codice>
+            <ns3:messaggio>Nessuna comunicazione</ns3:messaggio>
+          </ns3:Comunicazione>
+        </ns2:ElencoComunicazioni>
+        <ns2:codEseNaz>E01</ns2:codEseNaz>
+      </ns2:VisualizzaErogatoRicevuta>
+    </soap:Body>
+  </soap:Envelope>
+
+  </textarea>
+  <span>
+Qui la situazione e molto piu semplice.... Mi viene rispedito un XML con tutti i dati che mi interessano, formattati e descritti abbastanza chiaramente.
+Vorrei solo che mi identificassi il campo da usare per capire quale esame devo prenotare e in che sala.
+  </span>
+
+  <h1>Il tuo lavoro</h1>
+
+  <span>
+    Gioisci!!!!! Sei stata eletta all'unanimita e con standing ovation e applauso al ruolo di "Imperatrice delle comunicazioni"!!! <br>
+    Per esistere noi dobbiamo comunicare con dei sistemi gia esistenti, per ora Cill e Cup. Meglio parliamo con loro, maggiore diventa il
+    nostro orizzonte di possibilità. Il problema e che ora non parliamo proprio con loro, e il nostro orizzonte e di zero metri. <br> Il tuo compito e cambiare
+    questo fatto.
+   </span>
+<h3>Priorita assoluta</h3>
+  <span>
+per mettere l'app in produzione abbiamo bisogno di portare a termine con successo 3 comunicazioni <br><br>
+
+  1 verifica dell nre: <br>
+    l'ho descritta prima nell'esempio.... trova le info che servono. <br>
+    2 richiesta date disponibili al CUP <br>
+    qui partiamo da zero, non abbiamo esempi, log o altro che ci indichino la strada.... ma abbiamo gia tutte le informazioni di ritorno dal CILL....
+    bisogna solo trovare il modo di comunicare con il cup, capire che linguaggio usare (xml, hl7 o altro)
+    e come e strutturato il file di richiesta e quello di risposta.<br>
+
+    3 Effettiva prenotazione dell'esame al CUP<br>
+
+      come sopra, le info gia le abbiamo dal CILL, ma abbiamo bisogno di un canale di comunicazione e di sapere come usarlo.<br><br>
+
+  non risolvere quelle 3 comunicazioni significa non andare online, non diventare multimiliardari e tornare a casa con la coda fra
+  le gambe e un fallimento sulle spalle. INACCETTABILE!!!!!!!!
+
+  </span>
+
+  <h3>Medio periodo</h3>
+<span>
+risolvere i problemi sopra citati ci porta ad avere l'app in produzione, ma non un centimetro oltre. avere un modello completo e
+dettagliato delle modalita di comunicazione con cill e cup porta le nostre possibilita di penetrazione nel mercato a fiorire... <br>
+Sapere come emettere un nuovo nre potrebbe portarci (abbastanza velocemente) ad un app per la prenotazione degli interni. <br>Sapere come "sentire"
+l'evento REFERTATO ci darebbe la possibilita di avvertire i pazienti che la refertazione e avvenuta.... <br>
+Questi sono due esempi di possibilita che ci darebbe conoscere meglio questi web service, ma molte altre idee potrebbero venire a galla
+man mano che scopriamo nel dettaglio quante e quali info questi web service ci possono dare. <br>
+parliamo di un futuro ipotetico, che dipende inesorabilmente dal successo dell'app che stiamo costruendo ora, ma quando quel futuro arrivera
+sarebbe meglio essere pronti... e trasformare qualche millino in qualche milione!
+</span>
+
+  <h3>Lungo periodo</h3>
+<span>
+canta con me!
+<br>
+<br>
+"I web service sono taaaaaanti <br>
+milioni di milioooooni <br>
+..." <br> <br>
+
+Piu connessioni possiamo attivare con web service diversi piu potenti diventiamo... questo e un futuro lontano e che dipende da troppe
+variabili per prenderlo seriamente in considerazione ora... Tuttavia.... quella e la direzione
+
+</span>
