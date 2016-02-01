@@ -1,0 +1,164 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="input-date">
+  <style is="custom-style" include="shared-styles"></style>
+  <template>
+  <style>
+  :host {
+    display: block;
+
+    margin: 10px;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+    @apply(layout-around-justified);
+
+  }
+  paper-item{
+    margin: 10px;
+    padding: 10px;
+    border: solid;
+    @apply(--layout-vertical);
+    @apply(--layout-center);
+  }
+
+  .line{
+    @apply(--layout-horizontal);
+  }
+
+  .info{
+    margin: 5px;
+  }
+  .invisible{
+    display: none;
+  }
+  </style>
+
+  <iron-ajax
+  id="ricercadate"
+  method="POST"
+  content-type="application/json"
+  handle-as="json"
+  on-response="daterecived"
+  last-response="{{dates}}"></iron-ajax>
+
+  <iron-ajax
+  id="prenota"
+  method="POST"
+  content-type="application/json"
+  handle-as="json"
+  on-response="confermato"
+  ></iron-ajax>
+
+
+
+  <h3 class="title">
+    Scegliere una data per l'esame
+  </h3>
+  <paper-listbox id="datelist">
+    <template  is="dom-repeat" items="{{dates}}">
+      <paper-item>
+        <div class="line">
+          <div class="info">
+            Data: <span>{{item.data}}</span>
+          </div>
+          <div class="info">
+            Ora: <span>{{item.ora}}</span>
+          </div>
+        </div>
+        <paper-button class="primary" raised on-click="prenota">prenota</paper-button>
+      </paper-item>
+    </template>
+
+  </paper-listbox>
+
+
+  <paper-spinner-lite id="calendarspinner" active></paper-spinner-lite>
+
+
+</template>
+<script>
+(function() {
+  'use strict';
+
+  Polymer({
+    is: 'input-date',
+    behaviors: [MyBehaviors.Config],
+
+    properties: {
+      status: {
+        type: Number,
+        notify: true,
+        observer: 'statusChange'
+      },
+
+      chosendate: {
+        type: Object
+      },
+
+      esame: {
+        type: Object
+      }
+
+    },
+
+
+    statusChange: function(newValue) {
+      switch (newValue) {
+        case 2:
+        this.ricercadate();
+        this.$.datelist.toggleClass('invisible', true);
+        this.$.calendarspinner.toggleClass('invisible', false);
+        break;
+        case 3:
+        this.$.datelist.toggleClass('invisible', false);
+        this.$.calendarspinner.toggleClass('invisible', true);
+        break;
+        case 4:
+        this.$.datelist.toggleClass('invisible', true);
+        this.$.calendarspinner.toggleClass('invisible', false);
+        break;
+
+        default:
+
+      }
+    },
+    ricercadate: function(){
+      console.log('esame da rischiedere'+this.esame);
+      this.$.ricercadate.body={esame: this.esame};
+      this.$.ricercadate.generateRequest();
+    },
+
+    confermato:function(){
+      this.status=10;
+    },
+
+    daterecived:function(){
+      this.status=3;
+    },
+
+    prenota:function(e){
+      this.chosendate=e.model.get('item');
+      this.$.prenota.body={chosendate: this.chosendate};
+      this.$.prenota.generateRequest();
+      this.status=4;
+    },
+    attached: function(){
+      this.$.ricercadate.url=this.baseUrl+':3000/caf/ricercadate';
+      this.$.prenota.url=this.baseUrl+':3000/caf/prenota';
+      this.ricercadate();
+
+    },
+  });
+})();
+</script>
+</dom-module>
