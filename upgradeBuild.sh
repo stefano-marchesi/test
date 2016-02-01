@@ -8,5 +8,4 @@ expect "*#"
 send "git pull https://github.com/stefano-marchesi/test.git \r"
 expect "*#"
 send "docker-compose kill\r"
-expect "*#"
-send "docker-compose up\r"
+interact
