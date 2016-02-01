@@ -1,30 +1,48 @@
 nodeproxy:
   container_name: nodeproxy
-  build: static/.
+  image: node
+  volumes:
+   - ./static/mnt:/mnt
   ports:
    - "80:80"
+  command: node mnt/app.js
+
 server:
   container_name: server
-  build: server/.
+  image: node
+  volumes:
+   - ./server/mnt:/mnt
   net: "ospedale"
   ports:
    - "3000:3000"
+  command: node mnt/app.js
 
 cillcomm:
+  image: node
   container_name: CillComm
-  build: CillComm/.
+  volumes:
+   - ./CillComm/mnt:/mnt
   net: "ospedale"
   expose:
     - "80"
+  command: node mnt/app.js
+
 cafcomm:
+  image: node
   container_name: CafComm
-  build: CafComm/.
+  volumes:
+   - ./CafComm/mnt:/mnt
   net: "ospedale"
   expose:
     - "80"
+  command: node mnt/app.js
+
 internal:
+  image: node
   container_name: Internal
-  build: Internal/.
+  volumes:
+   - ./Internal/mnt:/mnt
   net: "ospedale"
   expose:
     - "80"
+  command: node mnt/app.js
