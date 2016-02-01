@@ -6,4 +6,7 @@ expect "*#"
 send "cd /home/build \r"
 expect "*#"
 send "git pull https://github.com/stefano-marchesi/test.git \r"
-interact
+expect "*#"
+send "docker-compose kill"
+expect "*#"
+send "docker-compose up"
