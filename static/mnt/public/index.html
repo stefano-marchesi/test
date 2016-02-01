@@ -714,7 +714,7 @@
 </template>
 </dom-module>
 <dom-module id="input-connection" assetpath="elements/input-connection/">
-  <style is="custom-style" include="shared-styles"></style>
+<style is="custom-style" include="shared-styles"></style>
   <template>
 
   <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}.invisible{display:none;}.title{margin-top:20px;margin-bottom:20px;}paper-fab{background-color:green;margin-top:10px;margin-right:10px;}</style>
@@ -737,7 +737,7 @@
 
   <div class="layout horizontal">
     <paper-fab mini="" icon="add" on-tap="addpin"></paper-fab>
-    <paper-input id="authcode" label="Codice Conferma" value="{{pin}}" char-counter="" maxlength="4" auto-validate="" pattern="[0-9]*" allowed-pattern="[0-9]" error-message="inserire un codice valido (4 numeri) " minlength="4" required=""></paper-input>
+    <paper-input id="authcode" label="Codice Conferma" value="{{pin}}" char-counter="" maxlength="5" auto-validate="" pattern="[0-9]*" allowed-pattern="[0-9]" error-message="inserire un codice valido (5 numeri) " minlength="5" required=""></paper-input>
   </div>
   <paper-button id="authcodebutton" on-tap="verify" class="primary" raised="">Conferma</paper-button>
   <paper-spinner-lite class="invisible" id="authcodespinner" active=""></paper-spinner-lite>
@@ -746,9 +746,8 @@
 </template>
 </dom-module>
 <dom-module id="input-date" assetpath="elements/input-date/">
-  <style is="custom-style" include="shared-styles"></style>
   <template>
-  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}paper-item{margin:10px;padding:10px;border:solid;@apply(--layout-vertical);@apply(--layout-center);}.line{@apply(--layout-horizontal);}.info{margin:5px;}.invisible{display:none;}</style>
+  <style>:host{display:block;@apply(--page-theme);}.invisible{display:none;}</style>
 
   <iron-ajax id="ricercadate" method="POST" content-type="application/json" handle-as="json" on-response="daterecived" last-response="{{dates}}"></iron-ajax>
 
@@ -756,23 +755,14 @@
 
 
 
-  <h3 class="title">
-    Scegliere una data per l'esame
-  </h3>
+
   <paper-listbox id="datelist">
-    <template is="dom-repeat" items="{{dates}}">
-      <paper-item>
-        <div class="line">
-          <div class="info">
-            Data: <span>{{item.data}}</span>
-          </div>
-          <div class="info">
-            Ora: <span>{{item.ora}}</span>
-          </div>
-        </div>
-        <paper-button class="primary" raised="" on-click="prenota">prenota</paper-button>
-      </paper-item>
-    </template>
+  <template is="dom-repeat" items="{{dates}}">
+    <paper-item>
+      <div class="line">Data: <span>{{item.data}}</span><br> ora: <span>{{item.ora}}</span></div>
+      <paper-button raised="" on-click="prenota">prenota</paper-button>
+    </paper-item>
+  </template>
 
   </paper-listbox>
 
