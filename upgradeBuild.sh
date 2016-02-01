@@ -6,3 +6,4 @@ expect "*#"
 send "cd /home/build \r"
 expect "*#"
 send "git pull https://github.com/stefano-marchesi/test.git \r"
+interact
