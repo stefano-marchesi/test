@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 var http = require('http');
 
 
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -15,15 +17,34 @@ app.use(bodyParser.urlencoded({
 
 app.post('/sendmail', function (req, res) {
 
+var hash = Math.floor((Math.random() * 10000));
 
-  setTimeout(function () {
+  var url= 'https://api.mailgun.net/v3/sandboxfb6330fa39d04b2cbd6cca03b4b5df40.mailgun.org/messages';
+  var key = 'api:key-789ffeeea599b8c7f8030d4572dc56ad';
+  var senrer = 'mrc@ospedale.com' ;
+  var reciver = req.body.mail;
+  var subject = 'Codice di conferma';
+  var text = 'Il Suo codice di conferma è: '+hash;
 
-    console.log('Internal dice: '+JSON.stringify(req.body));
-    res.send(
-      {mailsent:true}
-    );
 
-  }, 500);
+  var curl = 'curl -s --user \''+key +'\' \
+      '+url +' \
+      -F from=\''+senrer +'\' \
+      -F to=\''+reciver +'\' \
+      -F subject=\''+subject +'\' \
+      -F text=\''+text +'\'';
+
+      var exec = require('child_process').exec;
+      var child = exec(curl,
+        function(error, stdout, stderr)  {
+          res.send(
+            {mailsent:true,
+            verifycationcode:  hash}
+          );
+      });
+
+
+
 });
 
 app.post('/verifymail', function (req, res) {
