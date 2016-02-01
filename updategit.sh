@@ -4,3 +4,4 @@ expect "*: "
 send "stefano-marchesi\r"
 expect "*:"
 send "albachiara1\r"
+interact
