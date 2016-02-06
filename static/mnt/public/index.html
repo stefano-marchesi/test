@@ -696,11 +696,11 @@
 
   <div class="layout horizontal">
     <paper-fab mini="" icon="add" on-tap="addnre"></paper-fab>
-    <paper-input id="inputnre" label="Codice ricetta" value="{{nre}}" char-counter="" maxlength="15" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" error-message="inserire un codice valido (15 caratteri) " minlength="15"></paper-input>
+    <paper-input id="inputnre" label="Codice ricetta" value="{{nre}}" char-counter="" maxlength="15" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" minlength="15"></paper-input>
   </div>
   <div class="layout horizontal">
     <paper-fab mini="" icon="add" on-tap="addcf"></paper-fab>
-    <paper-input id="inputcf" label="Codice fiscale" value="{{cf}}" char-counter="" maxlength="16" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" error-message="inserire un codice valido (16 caratteri) " minlength="16"></paper-input>
+    <paper-input id="inputcf" label="Codice fiscale" value="{{cf}}" char-counter="" maxlength="16" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" autocapitalize="uppercase" minlength="16"></paper-input>
   </div>
   <div class="advance-to-mail">
     <paper-button id="advancebutton" on-tap="verify" class="primary" raised="">Verifica dati</paper-button>
@@ -791,29 +791,33 @@
 <dom-module id="prenotazioni-esterni" assetpath="elements/prenotazioni-esterni/">
   <template>
 
-    <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;};paper-material{max-width:600px;@apply(--layout-flex);}@media all and (min-width:600px){paper-material{margin-top:20px;}}</style>
+  <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;};paper-material{max-width:600px;@apply(--layout-flex);}.primalinea{font-size:25px;}@media all and (min-width:600px){paper-material{margin-top:20px;}}</style>
 
-    <paper-material elevation="2">
+  <paper-material elevation="2">
 
-      <paper-toolbar>
-        <div class="title">Prenotazioni Radiologia Biella</div>
-        <paper-icon-button raised="" icon="chevron-left" on-tap="prev"></paper-icon-button>
-        <paper-icon-button raised="" icon="chevron-right" on-tap="next"></paper-icon-button>
-      </paper-toolbar>
+    <paper-toolbar class="medium-tall">
+      <div class="primalinea">Ospedale di Biella</div>
+      <span class="bottom secondalinea">Prenotazioni radiologia</span>
+    </paper-toolbar>
 
-      <iron-pages class="content" selected="[[selected]]">
-        <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
-        <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
-        <input-date id="inputdate" status="{{dateStatus}}"></input-date>
-        <output-confermation></output-confermation>
+    <iron-pages class="content" selected="[[selected]]">
+      <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
+      <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
+      <input-date id="inputdate" status="{{dateStatus}}"></input-date>
+      <output-confermation></output-confermation>
 
-      </iron-pages>
+    </iron-pages>
 
-    </paper-material>
+    <div class="navigation">
+      <paper-fab mini="" class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
+      <paper-fab mini="" class="primary" icon="chevron-right" on-tap="next"></paper-fab>
+    </div>
+
+  </paper-material>
 
 
-  </template>
-  </dom-module>
+</template>
+</dom-module>
 
 
 
