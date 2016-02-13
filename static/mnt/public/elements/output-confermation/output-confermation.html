@@ -15,11 +15,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        @apply(--page-theme);
-      }
 
+        @apply(--layout-vertical);
+     @apply(--layout-center-justified);
+      }
+      .conferma{
+        margin: 15px;
+      }
     </style>
-    <div>La prenotazione e stata effettuata</div>
+    <div class="conferma">La prenotazione é stata effettuata</div>
   </template>
   <script>
   (function() {

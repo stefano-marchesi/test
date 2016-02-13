@@ -55,12 +55,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   on-response="verified"
   last-response="{{dates}}"></iron-ajax>
   <h3 class="title">
-    Inseritre Email e verificarla
+    Inserire E-mail
   </h3>
 
 
   <div class="layout horizontal">
-    <paper-fab mini icon="add" on-tap="addmail"></paper-fab>
+
     <gold-email-input
     id="emailinput"
     auto-validate
@@ -68,12 +68,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     value="{{mail}}"
     required></gold-email-input>
   </div>
-  <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised>invia Email</paper-button>
+  <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised> <iron-icon icon="drafts"></iron-icon>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner"  active></paper-spinner-lite>
 
 
   <div class="layout horizontal">
-    <paper-fab mini icon="add" on-tap="addpin"></paper-fab>
+
     <paper-input
     id="authcode"
     label="Codice Conferma"
@@ -81,7 +81,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     char-counter maxlength="4"
     auto-validate pattern="[0-9]*"
     allowed-pattern="[0-9]"
-    error-message="inserire un codice valido (4 numeri) "
     minlength="4"
     required
     ></paper-input>
@@ -143,8 +142,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.emailinput.toggleAttribute('disabled', false);
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleAttribute('disabled', true);
-        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcode.toggleClass('invisible', true);
+        this.$.authcodebutton.toggleClass('invisible', true);
         this.$.authcodespinner.toggleClass('invisible', true);
         this.$.emailinput.focus();
         break;
@@ -153,8 +152,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.emailinput.toggleAttribute('disabled', true);
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', false);
-        this.$.authcode.toggleAttribute('disabled', true);
-        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcode.toggleClass('invisible', true);
+        this.$.authcodebutton.toggleClass('invisible', true);
         this.$.authcodespinner.toggleClass('invisible', true);
         break;
 
@@ -162,8 +161,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.emailinput.toggleAttribute('disabled', true);
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleAttribute('disabled', false);
-        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcode.toggleClass('invisible', false);
+        this.$.authcodebutton.toggleClass('invisible', false);
         this.$.authcodespinner.toggleClass('invisible', true);
         this.$.authcode.focus();
         break;
@@ -172,6 +171,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.emailinput.toggleAttribute('disabled', true);
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputspinner.toggleClass('invisible', true);
+        this.$.authcode.toggleClass('invisible', false);
+        this.$.authcodebutton.toggleClass('invisible', false);
         this.$.authcode.toggleAttribute('disabled', true);
         this.$.authcodebutton.toggleAttribute('disabled', true);
         this.$.authcodespinner.toggleClass('invisible', false);

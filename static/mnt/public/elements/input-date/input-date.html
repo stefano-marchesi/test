@@ -23,16 +23,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     @apply(layout-around-justified);
 
   }
-  paper-item{
+  paper-material{
     margin: 10px;
-    padding: 10px;
-    border: solid;
-    @apply(--layout-vertical);
+
+    padding: 15px;
+    @apply(--layout-horizontal);
     @apply(--layout-center);
   }
 
   .line{
-    @apply(--layout-horizontal);
+   @apply(--layout-flex);
+   margin-right: 15px;
   }
 
   .info{
@@ -67,6 +68,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <paper-listbox id="datelist">
     <template  is="dom-repeat" items="{{dates}}">
       <paper-item>
+        <paper-material elevation="2">
+
         <div class="line">
           <div class="info">
             Data: <span>{{item.data}}</span>
@@ -75,7 +78,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             Ora: <span>{{item.ora}}</span>
           </div>
         </div>
-        <paper-button class="primary" raised on-click="prenota">prenota</paper-button>
+        <paper-fab icon="done" class="success"  on-click="prenota"></paper-fab>
+        </paper-material>
+
       </paper-item>
     </template>
 

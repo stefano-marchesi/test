@@ -20,46 +20,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     @apply(--layout-center-justified);
     height: 100%;
     max-height: 700px;
-  };
+  }
+
   paper-material{
     max-width: 600px;
-
+    height: 100%;
+    max-height: 700px;
     @apply(--layout-flex);
   }
 
   .primalinea{
-     font-size: 25px;
+    font-size: 25px;
   }
 
-  @media all and (min-width: 600px){
-    paper-material{
-      margin-top: 20px;
-    }
+
+  .centrale{
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  </style>
+  .secondalinea{
+    font-size: 20px;
+  }
 
-  <paper-material elevation="2">
+  paper-material{
+    margin-top: 20px;
+  }
+}
 
-    <paper-toolbar class="medium-tall">
-      <div class="primalinea">Ospedale di Biella</div>
-      <span class="bottom secondalinea">Prenotazioni radiologia</span>
-    </paper-toolbar>
+</style>
 
-    <iron-pages class="content" selected="[[selected]]" >
-      <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
-      <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
-      <input-date id="inputdate" status="{{dateStatus}}" ></input-date>
-      <output-confermation></output-confermation>
+<paper-material elevation="2">
 
-    </iron-pages>
+  <paper-toolbar class="medium-tall">
+    <div class="primalinea centrale">Ospedale di Biella</div>
+    <span class="bottom secondalinea centrale">Radiologia</span>
+  </paper-toolbar>
 
-    <div class="navigation">
-      <paper-fab mini class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
-      <paper-fab mini class="primary" icon="chevron-right" on-tap="next"></paper-fab>
-    </div>
+  <iron-pages class="content" selected="[[selected]]" >
+    <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
+    <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
+    <input-date id="inputdate" status="{{dateStatus}}" ></input-date>
+    <output-confermation></output-confermation>
 
-  </paper-material>
+  </iron-pages>
+
+  <div class="navigation">
+    <paper-fab mini class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
+    <paper-fab mini class="primary" icon="chevron-right" on-tap="next"></paper-fab>
+  </div>
+
+</paper-material>
 
 
 </template>

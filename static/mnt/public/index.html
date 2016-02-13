@@ -328,6 +328,18 @@
 
 </dom-module>
 
+<dom-module id="iron-image" assetpath="bower_components/iron-image/">
+  <template>
+    <style>:host{display:inline-block;overflow:hidden;position:relative;}#sizedImgDiv{@apply(--layout-fit);display:none;}#img{display:block;width:var(--iron-image-width,auto);height:var(--iron-image-height,auto);}:host([sizing]) #sizedImgDiv{display:block;}:host([sizing]) #img{display:none;}#placeholder{@apply(--layout-fit);background-color:inherit;opacity:1;@apply(--iron-image-placeholder);}#placeholder.faded-out{transition:opacity 0.5s linear;opacity:0;}</style>
+
+    <div id="sizedImgDiv" role="img" hidden$="[[_computeImgDivHidden(sizing)]]" aria-hidden$="[[_computeImgDivARIAHidden(alt)]]" aria-label$="[[_computeImgDivARIALabel(alt, src)]]"></div>
+    <img id="img" alt$="[[alt]]" hidden$="[[_computeImgHidden(sizing)]]">
+    <div id="placeholder" hidden$="[[_computePlaceholderHidden(preload, fade, loading, loaded)]]" class$="[[_computePlaceholderClassName(preload, fade, loading, loaded)]]"></div>
+  </template>
+
+  </dom-module>
+
+
 <dom-module id="paper-drawer-panel" assetpath="bower_components/paper-drawer-panel/">
   <template>
     <style>:host{display:block;position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;}iron-selector > #drawer{position:absolute;top:0;left:0;height:100%;background-color:white;-moz-box-sizing:border-box;box-sizing:border-box;@apply(--paper-drawer-panel-drawer-container);}.transition > #drawer{transition:-webkit-transform ease-in-out 0.3s,width ease-in-out 0.3s,visibility 0.3s;transition:transform ease-in-out 0.3s,width ease-in-out 0.3s,visibility 0.3s;}.left-drawer > #drawer{@apply(--paper-drawer-panel-left-drawer-container);}.right-drawer > #drawer{left:auto;right:0;@apply(--paper-drawer-panel-right-drawer-container);}iron-selector > #main{position:absolute;top:0;right:0;bottom:0;@apply(--paper-drawer-panel-main-container);}.transition > #main{transition:left ease-in-out 0.3s,padding ease-in-out 0.3s;}.right-drawer > #main{left:0;}.right-drawer.transition > #main{transition:right ease-in-out 0.3s,padding ease-in-out 0.3s;}#main > ::content > [main]{height:100%;}#drawer > ::content > [drawer]{height:100%;}#scrim{position:absolute;top:0;right:0;bottom:0;left:0;visibility:hidden;opacity:0;transition:opacity ease-in-out 0.38s,visibility ease-in-out 0.38s;background-color:rgba(0,0,0,0.3);@apply(--paper-drawer-panel-scrim);}.narrow-layout > #drawer{will-change:transform;}.narrow-layout > #drawer.iron-selected{box-shadow:2px 2px 4px rgba(0,0,0,0.15);}.right-drawer.narrow-layout > #drawer.iron-selected{box-shadow:-2px 2px 4px rgba(0,0,0,0.15);}.narrow-layout > #drawer > ::content > [drawer]{border:0;}.left-drawer.narrow-layout > #drawer:not(.iron-selected){-webkit-transform:translateX(-100%);transform:translateX(-100%);}.right-drawer.narrow-layout > #drawer:not(.iron-selected){left:auto;visibility:hidden;-webkit-transform:translateX(100%);transform:translateX(100%);}.right-drawer.narrow-layout.dragging > #drawer:not(.iron-selected),.right-drawer.narrow-layout.peeking > #drawer:not(.iron-selected){visibility:visible;}.narrow-layout > #main{padding:0;}.right-drawer.narrow-layout > #main{left:0;right:0;}.narrow-layout > #main:not(.iron-selected) > #scrim,.dragging > #main > #scrim{visibility:visible;opacity:var(--paper-drawer-panel-scrim-opacity,1);}.narrow-layout > #main > *{margin:0;min-height:100%;left:0;right:0;-moz-box-sizing:border-box;box-sizing:border-box;}iron-selector:not(.narrow-layout) #main ::content [paper-drawer-toggle]{display:none;}</style>
@@ -593,18 +605,6 @@
   </dom-module>
 
 
-<dom-module id="iron-image" assetpath="bower_components/iron-image/">
-  <template>
-    <style>:host{display:inline-block;overflow:hidden;position:relative;}#sizedImgDiv{@apply(--layout-fit);display:none;}#img{display:block;width:var(--iron-image-width,auto);height:var(--iron-image-height,auto);}:host([sizing]) #sizedImgDiv{display:block;}:host([sizing]) #img{display:none;}#placeholder{@apply(--layout-fit);background-color:inherit;opacity:1;@apply(--iron-image-placeholder);}#placeholder.faded-out{transition:opacity 0.5s linear;opacity:0;}</style>
-
-    <div id="sizedImgDiv" role="img" hidden$="[[_computeImgDivHidden(sizing)]]" aria-hidden$="[[_computeImgDivARIAHidden(alt)]]" aria-label$="[[_computeImgDivARIALabel(alt, src)]]"></div>
-    <img id="img" alt$="[[alt]]" hidden$="[[_computeImgHidden(sizing)]]">
-    <div id="placeholder" hidden$="[[_computePlaceholderHidden(preload, fade, loading, loaded)]]" class$="[[_computePlaceholderClassName(preload, fade, loading, loaded)]]"></div>
-  </template>
-
-  </dom-module>
-
-
 <dom-module id="paper-card" assetpath="bower_components/paper-card/">
   <template>
     <style include="paper-material">:host{display:inline-block;position:relative;box-sizing:border-box;background-color:var(--paper-card-background-color,--primary-background-color);border-radius:2px;@apply(--paper-card);}/* IE 10 support for HTML5 hidden attr */ [hidden]{display:none !important;}.header{position:relative;border-top-left-radius:inherit;border-top-right-radius:inherit;overflow:hidden;@apply(--paper-card-header);}.header iron-image{width:100%;--iron-image-width:100%;pointer-events:none;@apply(--paper-card-header-image);}.header .title-text{padding:16px;font-size:24px;font-weight:400;color:var(--paper-card-header-color,#000);@apply(--paper-card-header-text);}.header .title-text.over-image{position:absolute;bottom:0px;@apply(--paper-card-header-image-text);}:host ::content .card-content{padding:16px;position:relative;@apply(--paper-card-content);}:host ::content .card-actions{border-top:1px solid #e8e8e8;padding:5px 16px;position:relative;@apply(--paper-card-actions);}</style>
@@ -686,26 +686,29 @@
 <style is="custom-style">/* * PolymerThemes v1.0.3 * Homepage:https://polymerthemes.com * Copyright 2015 Polymer Themes * Licensed under BSD * Based on Polymer:http://www.polymer-project.org/ * Compatible with Polymer 1.0 */@import url("https://fonts.googleapis.com/css?family=Oxygen:700|Source+Sans+Pro");html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;font-size:16px;}html,body{margin:0px;padding:0px;min-height:100%;color:#444444;background-color:#f2f7fa;font-family:'Source Sans Pro',sans-serif;font-weight:400;}section{padding:40px 0px;}section[hero]{background-color:#f2f7fa;}h1,h2,h3,h4,h5,h6{font-weight:400;margin:0px;padding:0px;line-height:1em;}h1,h3,h5{font-family:'Oxygen',sans-serif;}h1{font-size:50px;margin:30px 0px;}h2{color:#444444;font-size:35px;margin:20px 0px;}h3{font-size:25px;margin:15px 0px;}h4{font-size:20px;}a,a:active,a:visited,a:focus{color:#444444;text-decoration:none;}a:hover{color:#444444;text-decoration:underline;}:root{--default-primary-color:#373b50;--dark-primary-color:#373b50;--light-primary-color:#c5cae9;--text-primary-color:#ffffff;--accent-color:#ff4081;--primary-background-color:#ffffff;--primary-text-color:#444444;--secondary-text-color:#444444;--disabled-text-color:#313238;--divider-color:#e0e0e0;--paper-checkbox-checked-color:#373b50;--paper-checkbox-checked-ink-color:#373b50;--paper-checkbox-unchecked-color:#444444;--paper-checkbox-unchecked-ink-color:#444444;--paper-checkbox-label-color:#444444;--paper-fab-background:#373b50;--paper-fab-disabled-background:#afb1b9;--paper-fab-disabled-text:#313238;--paper-icon-button-disabled-text:#afb1b9;--paper-input-container-color:#919191;--paper-input-container-focus-color:#373b50;--paper-input-container-invalid-color:#ff6e40;--paper-input-container-input-color:#919191;--paper-menu-background-color:#f2f7fa;--paper-menu-color:#444444;--paper-menu-disabled-color:#afb1b9;--paper-progress-active-color:#373b50;--paper-progress-secondary-color:#90a4ae;--paper-radio-button-checked-color:#373b50;--paper-radio-button-checked-ink-color:#d6d8e3;--paper-radio-button-unchecked-color:#444444;--paper-radio-button-unchecked-ink-color:#444444;--paper-radio-button-label-color:#444444;--paper-slider-knob-color:#373b50;--paper-slider-active-color:#373b50;--paper-slider-pin-color:#373b50;--paper-spinner-layer-1-color:#373b50;--paper-spinner-layer-2-color:#373b50;--paper-spinner-layer-3-color:#373b50;--paper-spinner-layer-4-color:#373b50;--paper-tabs-selection-bar-color:#90a4ae;--paper-tab-ink:#90a4ae;--paper-toggle-button-checked-bar-color:#373b50;--paper-toggle-button-checked-button-color:#373b50;--paper-toggle-button-checked-ink-color:#373b50;--paper-toggle-button-unchecked-bar-color:#444444;--paper-toggle-button-unchecked-button-color:white;--paper-toggle-button-unchecked-ink-color:white;--paper-toolbar-background:#373b50;--paper-toolbar-color:#ffffff;}paper-toolbar a,paper-toolbar a:hover,paper-toolbar a:active,paper-toolbar a:visited,paper-toolbar a:focus{color:#ffffff;}paper-button.primary,paper-button.btn-primary,paper-button[primary]{color:#373b50;}paper-button.primary[raised],paper-button.btn-primary[raised],paper-button[primary][raised]{background-color:#373b50;color:#fff;}paper-button.secondary,paper-button.btn-secondary,paper-button[secondary]{color:#90a4ae;}paper-button.secondary[raised],paper-button.btn-secondary[raised],paper-button[secondary][raised]{background-color:#90a4ae;color:#2b3134;}paper-button.success,paper-button.btn-success,paper-button[success]{color:#9dc56e;}paper-button.success[raised],paper-button.btn-success[raised],paper-button[success][raised]{background-color:#9dc56e;color:#2f3b21;}paper-button.info,paper-button.btn-info,paper-button[info]{color:#ffb74d;}paper-button.info[raised],paper-button.btn-info[raised],paper-button[info][raised]{background-color:#ffb74d;color:#4d3717;}paper-button.warning,paper-button.btn-warning,paper-button[warning]{color:#fadd60;}paper-button.warning[raised],paper-button.btn-warning[raised],paper-button[warning][raised]{background-color:#fadd60;color:#4b421d;}paper-button.error,paper-button.btn-error,paper-button[error]{color:#ff6e40;}paper-button.error[raised],paper-button.btn-error[raised],paper-button[error][raised]{background-color:#ff6e40;color:#4d2113;}paper-button.link,paper-button.btn-link,paper-button[link]{text-decoration:underline;}paper-button[raised]{color:#444444;}paper-button[disabled]{color:#313238 !important;background:#afb1b9 !important;}paper-icon-button.primary,paper-icon-button.btn-primary,paper-icon-button[primary]{color:#373b50;}paper-icon-button.primary:hover,paper-icon-button.btn-primary:hover,paper-icon-button[primary]:hover{background-color:#ebebee;background-color:rgba(55,59,80,0.2);border-radius:50%;}paper-icon-button.secondary,paper-icon-button.btn-secondary,paper-icon-button[secondary]{color:#90a4ae;}paper-icon-button.secondary:hover,paper-icon-button.btn-secondary:hover,paper-icon-button[secondary]:hover{background-color:#f4f6f7;background-color:rgba(144,164,174,0.2);border-radius:50%;}paper-icon-button.success,paper-icon-button.btn-success,paper-icon-button[success]{color:#9dc56e;}paper-icon-button.success:hover,paper-icon-button.btn-success:hover,paper-icon-button[success]:hover{background-color:#f5f9f1;background-color:rgba(157,197,110,0.2);border-radius:50%;}paper-icon-button.info,paper-icon-button.btn-info,paper-icon-button[info]{color:#ffb74d;}paper-icon-button.info:hover,paper-icon-button.btn-info:hover,paper-icon-button[info]:hover{background-color:#fff8ed;background-color:rgba(255,183,77,0.2);border-radius:50%;}paper-icon-button.warning,paper-icon-button.btn-warning,paper-icon-button[warning]{color:#fadd60;}paper-icon-button.warning:hover,paper-icon-button.btn-warning:hover,paper-icon-button[warning]:hover{background-color:#fffcef;background-color:rgba(250,221,96,0.2);border-radius:50%;}paper-icon-button.error,paper-icon-button.btn-error,paper-icon-button[error]{color:#ff6e40;}paper-icon-button.error:hover,paper-icon-button.btn-error:hover,paper-icon-button[error]:hover{background-color:#fff1ec;background-color:rgba(255,110,64,0.2);border-radius:50%;}paper-checkbox #checkmark.paper-checkbox,paper-checkbox /deep/,paper-checkbox::shadow #checkmark.paper-checkbox{border-color:#fff !important;}paper-dialog{color:#444444;background-color:#ffffff;font-family:'Source Sans Pro',sans-serif;font-weight:400;}paper-dialog h1,paper-dialog h2,paper-dialog h3,paper-dialog h4,paper-dialog h5,paper-dialog h6{overflow:visible;padding:0 1em;text-align:center;}paper-fab{--text-primary-color:white;}paper-fab{background-color:#373b50;color:#fff;--paper-fab-keyboard-focus-background:#6c749a;}paper-fab.primary,paper-fab.btn-primary,paper-fab[primary]{background-color:#373b50;color:#fff;--paper-fab-keyboard-focus-background:#6c749a;}paper-fab.secondary,paper-fab.btn-secondary,paper-fab[secondary]{background-color:#90a4ae;color:#2b3134;--paper-fab-keyboard-focus-background:#50646e;}paper-fab.success,paper-fab.btn-success,paper-fab[success]{background-color:#9dc56e;color:#2f3b21;--paper-fab-keyboard-focus-background:#5d8033;}paper-fab.info,paper-fab.btn-info,paper-fab[info]{background-color:#ffb74d;color:#4d3717;--paper-fab-keyboard-focus-background:#cd7a00;}paper-fab.warning,paper-fab.btn-warning,paper-fab[warning]{background-color:#fadd60;color:#4b421d;--paper-fab-keyboard-focus-background:#d4ad07;}paper-fab.error,paper-fab.btn-error,paper-fab[error]{background-color:#ff6e40;color:#4d2113;--paper-fab-keyboard-focus-background:#c02e00;}paper-fab[disabled]{color:#313238 !important;background:#afb1b9 !important;}section.hero paper-menu,section[hero] paper-menu{--paper-menu-background-color:#f2f7fa;}paper-tabs{background-color:#373b50;color:#ffffff;}</style><dom-module id="shared-styles" assetpath="styles/"><template><style>@import url("https://fonts.googleapis.com/css?family=Oxygen:700|Source+Sans+Pro");html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;font-size:16px;}html,body{margin:0px;padding:0px;min-height:100%;color:#444444;background-color:#ffffff;font-family:'Source Sans Pro',sans-serif;font-weight:400;}section{padding:40px 0px;}section[hero]{background-color:#f2f7fa;}h1,h2,h3,h4,h5,h6{font-weight:400;margin:0px;padding:0px;line-height:1em;}h1,h3,h5{font-family:'Oxygen',sans-serif;}h1{font-size:50px;margin:30px 0px;}h2{color:#444444;font-size:35px;margin:20px 0px;}h3{font-size:25px;margin:15px 0px;}h4{font-size:20px;}a,a:active,a:visited,a:focus{color:#444444;text-decoration:none;}a:hover{color:#444444;text-decoration:underline;}:root{--default-primary-color:#373b50;--dark-primary-color:#373b50;--light-primary-color:#c5cae9;--text-primary-color:#ffffff;--accent-color:#ff4081;--primary-background-color:#ffffff;--primary-text-color:#444444;--secondary-text-color:#444444;--disabled-text-color:#313238;--divider-color:#e0e0e0;--paper-checkbox-checked-color:#373b50;--paper-checkbox-checked-ink-color:#373b50;--paper-checkbox-unchecked-color:#444444;--paper-checkbox-unchecked-ink-color:#444444;--paper-checkbox-label-color:#444444;--paper-fab-background:#373b50;--paper-fab-disabled-background:#afb1b9;--paper-fab-disabled-text:#313238;--paper-icon-button-disabled-text:#afb1b9;--paper-input-container-color:#919191;--paper-input-container-focus-color:#373b50;--paper-input-container-invalid-color:#ff6e40;--paper-input-container-input-color:#919191;--paper-menu-background-color:#f2f7fa;--paper-menu-color:#444444;--paper-menu-disabled-color:#afb1b9;--paper-progress-active-color:#373b50;--paper-progress-secondary-color:#90a4ae;--paper-radio-button-checked-color:#373b50;--paper-radio-button-checked-ink-color:#d6d8e3;--paper-radio-button-unchecked-color:#444444;--paper-radio-button-unchecked-ink-color:#444444;--paper-radio-button-label-color:#444444;--paper-slider-knob-color:#373b50;--paper-slider-active-color:#373b50;--paper-slider-pin-color:#373b50;--paper-spinner-layer-1-color:#373b50;--paper-spinner-layer-2-color:#373b50;--paper-spinner-layer-3-color:#373b50;--paper-spinner-layer-4-color:#373b50;--paper-tabs-selection-bar-color:#90a4ae;--paper-tab-ink:#90a4ae;--paper-toggle-button-checked-bar-color:#373b50;--paper-toggle-button-checked-button-color:#373b50;--paper-toggle-button-checked-ink-color:#373b50;--paper-toggle-button-unchecked-bar-color:#444444;--paper-toggle-button-unchecked-button-color:white;--paper-toggle-button-unchecked-ink-color:white;--paper-toolbar-background:#373b50;--paper-toolbar-color:#ffffff;}paper-toolbar a,paper-toolbar a:hover,paper-toolbar a:active,paper-toolbar a:visited,paper-toolbar a:focus{color:#ffffff;}paper-button.primary,paper-button.btn-primary,paper-button[primary]{color:#373b50;}paper-button.primary[raised],paper-button.btn-primary[raised],paper-button[primary][raised]{background-color:#373b50;color:#fff;}paper-button.secondary,paper-button.btn-secondary,paper-button[secondary]{color:#90a4ae;}paper-button.secondary[raised],paper-button.btn-secondary[raised],paper-button[secondary][raised]{background-color:#90a4ae;color:#2b3134;}paper-button.success,paper-button.btn-success,paper-button[success]{color:#9dc56e;}paper-button.success[raised],paper-button.btn-success[raised],paper-button[success][raised]{background-color:#9dc56e;color:#2f3b21;}paper-button.info,paper-button.btn-info,paper-button[info]{color:#ffb74d;}paper-button.info[raised],paper-button.btn-info[raised],paper-button[info][raised]{background-color:#ffb74d;color:#4d3717;}paper-button.warning,paper-button.btn-warning,paper-button[warning]{color:#fadd60;}paper-button.warning[raised],paper-button.btn-warning[raised],paper-button[warning][raised]{background-color:#fadd60;color:#4b421d;}paper-button.error,paper-button.btn-error,paper-button[error]{color:#ff6e40;}paper-button.error[raised],paper-button.btn-error[raised],paper-button[error][raised]{background-color:#ff6e40;color:#4d2113;}paper-button.link,paper-button.btn-link,paper-button[link]{text-decoration:underline;}paper-button[raised]{color:#444444;}paper-button[disabled]{color:#313238 !important;background:#afb1b9 !important;}paper-icon-button.primary,paper-icon-button.btn-primary,paper-icon-button[primary]{color:#373b50;}paper-icon-button.primary:hover,paper-icon-button.btn-primary:hover,paper-icon-button[primary]:hover{background-color:#ebebee;background-color:rgba(55,59,80,0.2);border-radius:50%;}paper-icon-button.secondary,paper-icon-button.btn-secondary,paper-icon-button[secondary]{color:#90a4ae;}paper-icon-button.secondary:hover,paper-icon-button.btn-secondary:hover,paper-icon-button[secondary]:hover{background-color:#f4f6f7;background-color:rgba(144,164,174,0.2);border-radius:50%;}paper-icon-button.success,paper-icon-button.btn-success,paper-icon-button[success]{color:#9dc56e;}paper-icon-button.success:hover,paper-icon-button.btn-success:hover,paper-icon-button[success]:hover{background-color:#f5f9f1;background-color:rgba(157,197,110,0.2);border-radius:50%;}paper-icon-button.info,paper-icon-button.btn-info,paper-icon-button[info]{color:#ffb74d;}paper-icon-button.info:hover,paper-icon-button.btn-info:hover,paper-icon-button[info]:hover{background-color:#fff8ed;background-color:rgba(255,183,77,0.2);border-radius:50%;}paper-icon-button.warning,paper-icon-button.btn-warning,paper-icon-button[warning]{color:#fadd60;}paper-icon-button.warning:hover,paper-icon-button.btn-warning:hover,paper-icon-button[warning]:hover{background-color:#fffcef;background-color:rgba(250,221,96,0.2);border-radius:50%;}paper-icon-button.error,paper-icon-button.btn-error,paper-icon-button[error]{color:#ff6e40;}paper-icon-button.error:hover,paper-icon-button.btn-error:hover,paper-icon-button[error]:hover{background-color:#fff1ec;background-color:rgba(255,110,64,0.2);border-radius:50%;}paper-checkbox #checkmark.paper-checkbox,paper-checkbox /deep/,paper-checkbox::shadow #checkmark.paper-checkbox{border-color:#fff !important;}paper-dialog{color:#444444;background-color:#ffffff;font-family:'Source Sans Pro',sans-serif;font-weight:400;}paper-dialog h1,paper-dialog h2,paper-dialog h3,paper-dialog h4,paper-dialog h5,paper-dialog h6{overflow:visible;padding:0 1em;text-align:center;}paper-fab{--text-primary-color:white;}paper-fab{background-color:#373b50;color:#fff;--paper-fab-keyboard-focus-background:#6c749a;}paper-fab.primary,paper-fab.btn-primary,paper-fab[primary]{background-color:#373b50;color:#fff;--paper-fab-keyboard-focus-background:#6c749a;}paper-fab.secondary,paper-fab.btn-secondary,paper-fab[secondary]{background-color:#90a4ae;color:#2b3134;--paper-fab-keyboard-focus-background:#50646e;}paper-fab.success,paper-fab.btn-success,paper-fab[success]{background-color:#9dc56e;color:#2f3b21;--paper-fab-keyboard-focus-background:#5d8033;}paper-fab.info,paper-fab.btn-info,paper-fab[info]{background-color:#ffb74d;color:#4d3717;--paper-fab-keyboard-focus-background:#cd7a00;}paper-fab.warning,paper-fab.btn-warning,paper-fab[warning]{background-color:#fadd60;color:#4b421d;--paper-fab-keyboard-focus-background:#d4ad07;}paper-fab.error,paper-fab.btn-error,paper-fab[error]{background-color:#ff6e40;color:#4d2113;--paper-fab-keyboard-focus-background:#c02e00;}paper-fab[disabled]{color:#313238 !important;background:#afb1b9 !important;}section.hero paper-menu,section[hero] paper-menu{--paper-menu-background-color:#f2f7fa;}paper-tabs{background-color:#373b50;color:#ffffff;}</style></template></dom-module><dom-module id="input-nre" assetpath="elements/input-nre/">
 <style is="custom-style" include="shared-styles"></style>
   <template>
-  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);}.invisible{display:none;}.title{margin-top:20px;margin-bottom:20px;}.advance-to-mail{margin-top:20px;}paper-input{@apply(--layout-flex);}.spinner{margin-top:40px;}paper-fab{background-color:green;margin-top:10px;margin-right:10px;}</style>
+  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);}.invisible{display:none;}.title{margin-top:20px;margin-bottom:20px;margin-left:auto;margin-right:auto;}.advance-to-mail{margin-top:20px;}paper-input{@apply(--layout-flex);}.spinner{margin-top:40px;}paper-fab{background-color:green;margin-top:10px;margin-right:10px;}.esempio{width:250px;height:200px;}</style>
 
   <iron-ajax id="verificanre" method="POST" content-type="application/json" handle-as="json" on-response="responserecived" last-response="{{datanre}}"></iron-ajax>
 
   <h3 class="title">
-    Insetitre il codice N.R.E. e il codice fiscale
+    Inserire codice N.R.E. e Codice Fiscale
+
   </h3>
+<iron-image sizing="contain" class="esempio" src="http://192.168.1.5:5000/images/re.jpg"></iron-image>
 
   <div class="layout horizontal">
-    <paper-fab mini="" icon="add" on-tap="addnre"></paper-fab>
-    <paper-input id="inputnre" label="Codice ricetta" value="{{nre}}" char-counter="" maxlength="15" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" minlength="15"></paper-input>
+
+    <paper-input id="inputnre" label="N.R.E." value="{{nre}}" char-counter="" maxlength="15" auto-validate="" pattern="[0-9a-zA-Z]*" minlength="15"></paper-input>
+
   </div>
   <div class="layout horizontal">
-    <paper-fab mini="" icon="add" on-tap="addcf"></paper-fab>
-    <paper-input id="inputcf" label="Codice fiscale" value="{{cf}}" char-counter="" maxlength="16" auto-validate="" pattern="[0-9a-zA-Z]*" allowed-pattern="[0-9a-zA-Z]" autocapitalize="uppercase" minlength="16"></paper-input>
+
+    <paper-input id="inputcf" label="Codice Fiscale" value="{{cf}}" char-counter="" maxlength="16" auto-validate="" pattern="[0-9a-zA-Z]*" minlength="16"></paper-input>
+
   </div>
   <div class="advance-to-mail">
-    <paper-button id="advancebutton" on-tap="verify" class="primary" raised="">Verifica dati</paper-button>
+    <paper-button id="advancebutton" on-tap="verify" class="success" raised="">Verifica dati</paper-button>
   </div>
-
   <div class="spinner layout flex">
     <paper-spinner-lite class="invisible" id="spinner" alt="Loading contacts list" active=""></paper-spinner-lite>
 
@@ -723,21 +726,21 @@
 
   <iron-ajax id="mailverifier" method="POST" content-type="application/json" handle-as="json" on-response="verified" last-response="{{dates}}"></iron-ajax>
   <h3 class="title">
-    Inseritre Email e verificarla
+    Inserire E-mail
   </h3>
 
 
   <div class="layout horizontal">
-    <paper-fab mini="" icon="add" on-tap="addmail"></paper-fab>
+
     <gold-email-input id="emailinput" auto-validate="" label="email" value="{{mail}}" required=""></gold-email-input>
   </div>
-  <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised="">invia Email</paper-button>
+  <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised=""> <iron-icon icon="drafts"></iron-icon>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner" active=""></paper-spinner-lite>
 
 
   <div class="layout horizontal">
-    <paper-fab mini="" icon="add" on-tap="addpin"></paper-fab>
-    <paper-input id="authcode" label="Codice Conferma" value="{{pin}}" char-counter="" maxlength="4" auto-validate="" pattern="[0-9]*" allowed-pattern="[0-9]" error-message="inserire un codice valido (4 numeri) " minlength="4" required=""></paper-input>
+
+    <paper-input id="authcode" label="Codice Conferma" value="{{pin}}" char-counter="" maxlength="4" auto-validate="" pattern="[0-9]*" allowed-pattern="[0-9]" minlength="4" required=""></paper-input>
   </div>
   <paper-button id="authcodebutton" on-tap="verify" class="primary" raised="">Conferma</paper-button>
   <paper-spinner-lite class="invisible" id="authcodespinner" active=""></paper-spinner-lite>
@@ -748,7 +751,7 @@
 <dom-module id="input-date" assetpath="elements/input-date/">
   <style is="custom-style" include="shared-styles"></style>
   <template>
-  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}paper-item{margin:10px;padding:10px;border:solid;@apply(--layout-vertical);@apply(--layout-center);}.line{@apply(--layout-horizontal);}.info{margin:5px;}.invisible{display:none;}</style>
+  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}paper-material{margin:10px;padding:15px;@apply(--layout-horizontal);@apply(--layout-center);}.line{@apply(--layout-flex);margin-right:15px;}.info{margin:5px;}.invisible{display:none;}</style>
 
   <iron-ajax id="ricercadate" method="POST" content-type="application/json" handle-as="json" on-response="daterecived" last-response="{{dates}}"></iron-ajax>
 
@@ -762,6 +765,8 @@
   <paper-listbox id="datelist">
     <template is="dom-repeat" items="{{dates}}">
       <paper-item>
+        <paper-material elevation="2">
+
         <div class="line">
           <div class="info">
             Data: <span>{{item.data}}</span>
@@ -770,7 +775,9 @@
             Ora: <span>{{item.ora}}</span>
           </div>
         </div>
-        <paper-button class="primary" raised="" on-click="prenota">prenota</paper-button>
+        <paper-fab icon="done" class="success" on-click="prenota"></paper-fab>
+        </paper-material>
+
       </paper-item>
     </template>
 
@@ -784,36 +791,36 @@
 </dom-module>
 <dom-module id="output-confermation" assetpath="elements/output-confermation/">
   <template>
-    <style>:host{display:block;@apply(--page-theme);}</style>
-    <div>La prenotazione e stata effettuata</div>
+    <style>:host{display:block;@apply(--layout-vertical);@apply(--layout-center-justified);}.conferma{margin:15px;}</style>
+    <div class="conferma">La prenotazione é stata effettuata</div>
   </template>
   </dom-module>
 <dom-module id="prenotazioni-esterni" assetpath="elements/prenotazioni-esterni/">
   <template>
 
-  <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;};paper-material{max-width:600px;@apply(--layout-flex);}.primalinea{font-size:25px;}@media all and (min-width:600px){paper-material{margin-top:20px;}}</style>
+  <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;}paper-material{max-width:600px;height:100%;max-height:700px;@apply(--layout-flex);}.primalinea{font-size:25px;}.centrale{margin-left:auto;margin-right:auto;}.secondalinea{font-size:20px;}paper-material{margin-top:20px;}}</style>
 
-  <paper-material elevation="2">
+<paper-material elevation="2">
 
-    <paper-toolbar class="medium-tall">
-      <div class="primalinea">Ospedale di Biella</div>
-      <span class="bottom secondalinea">Prenotazioni radiologia</span>
-    </paper-toolbar>
+  <paper-toolbar class="medium-tall">
+    <div class="primalinea centrale">Ospedale di Biella</div>
+    <span class="bottom secondalinea centrale">Radiologia</span>
+  </paper-toolbar>
 
-    <iron-pages class="content" selected="[[selected]]">
-      <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
-      <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
-      <input-date id="inputdate" status="{{dateStatus}}"></input-date>
-      <output-confermation></output-confermation>
+  <iron-pages class="content" selected="[[selected]]">
+    <input-nre id="inputnre" status="{{nreStatus}}"></input-nre>
+    <input-connection id="inputmail" status="{{connectionStatus}}"></input-connection>
+    <input-date id="inputdate" status="{{dateStatus}}"></input-date>
+    <output-confermation></output-confermation>
 
-    </iron-pages>
+  </iron-pages>
 
-    <div class="navigation">
-      <paper-fab mini="" class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
-      <paper-fab mini="" class="primary" icon="chevron-right" on-tap="next"></paper-fab>
-    </div>
+  <div class="navigation">
+    <paper-fab mini="" class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
+    <paper-fab mini="" class="primary" icon="chevron-right" on-tap="next"></paper-fab>
+  </div>
 
-  </paper-material>
+</paper-material>
 
 
 </template>

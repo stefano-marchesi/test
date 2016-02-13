@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../behaviors/config-behavior.html">
+
+
 <dom-module id="input-nre">
 <style is="custom-style" include="shared-styles"></style>
   <template>
@@ -29,11 +31,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   .title{
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .advance-to-mail{
     margin-top: 20px;
-
   }
 
   paper-input{
@@ -42,12 +45,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   .spinner{
     margin-top: 40px;
   }
-
   paper-fab{
     background-color: green;
     margin-top: 10px;
     margin-right: 10px;
   }
+
+  .esempio{
+    width: 250px;
+    height: 200px;
+  }
+
 
   </style>
 
@@ -60,41 +68,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   last-response="{{datanre}}"></iron-ajax>
 
   <h3 class="title">
-    Insetitre il codice N.R.E. e il codice fiscale
+    Inserire codice N.R.E. e Codice Fiscale
+
   </h3>
+<iron-image sizing="contain" class="esempio" src="http://192.168.1.5:5000/images/re.jpg"></iron-image>
 
   <div class="layout horizontal">
-    <paper-fab mini icon="add" on-tap="addnre"></paper-fab>
+
     <paper-input
     id="inputnre"
-    label="Codice ricetta"
+    label="N.R.E."
     value="{{nre}}"
     char-counter maxlength="15"
     auto-validate pattern="[0-9a-zA-Z]*"
-    allowed-pattern="[0-9a-zA-Z]"
-
     minlength="15"
 
     ></paper-input>
+
   </div>
   <div class="layout horizontal">
-    <paper-fab mini icon="add" on-tap="addcf"></paper-fab>
+
     <paper-input
     id="inputcf"
-    label="Codice fiscale"
+    label="Codice Fiscale"
     value="{{cf}}"
     char-counter maxlength="16"
     auto-validate pattern="[0-9a-zA-Z]*"
-    allowed-pattern="[0-9a-zA-Z]"
-    autocapitalize="uppercase"
+
     minlength="16"
 
     ></paper-input>
+
   </div>
   <div class="advance-to-mail">
-    <paper-button id="advancebutton" on-tap="verify" class="primary" raised>Verifica dati</paper-button>
+    <paper-button id="advancebutton" on-tap="verify" class="success" raised>Verifica dati</paper-button>
   </div>
-
   <div class="spinner layout flex">
     <paper-spinner-lite class="invisible" id="spinner" alt="Loading contacts list" active></paper-spinner-lite>
 
