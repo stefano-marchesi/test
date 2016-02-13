@@ -694,7 +694,7 @@
     Inserire codice N.R.E. e Codice Fiscale
 
   </h3>
-<iron-image sizing="contain" class="esempio" src="http://192.168.1.5:5000/images/re.jpg"></iron-image>
+<iron-image sizing="contain" class="esempio" src="http://5.189.145.126/images/re.jpg"></iron-image>
 
   <div class="layout horizontal">
 
@@ -791,10 +791,16 @@
 </dom-module>
 <dom-module id="output-confermation" assetpath="elements/output-confermation/">
   <template>
-    <style>:host{display:block;@apply(--layout-vertical);@apply(--layout-center-justified);}.conferma{margin:15px;}</style>
-    <div class="conferma">La prenotazione é stata effettuata</div>
-  </template>
-  </dom-module>
+  <style>:host{display:block;margin-top:30px;@apply(--layout-vertical);@apply(--layout-center-justified);}.conferma{margin:15px;}</style>
+  <div class="conferma">La prenotazione é stata effettuata. <br><br> Le é stata inviata una mail con:<br>
+    <ul>
+      <li>Le norme di buona preparazione</li>
+      <li>Il link per il pagamento del ticket online</li>
+      <li>Il link per il ritiro del referto online</li>
+    </ul>
+  </div>
+</template>
+</dom-module>
 <dom-module id="prenotazioni-esterni" assetpath="elements/prenotazioni-esterni/">
   <template>
 
@@ -815,10 +821,7 @@
 
   </iron-pages>
 
-  <div class="navigation">
-    <paper-fab mini="" class="primary" icon="chevron-left" on-tap="prev"></paper-fab>
-    <paper-fab mini="" class="primary" icon="chevron-right" on-tap="next"></paper-fab>
-  </div>
+
 
 </paper-material>
 

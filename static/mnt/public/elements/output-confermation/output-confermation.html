@@ -12,34 +12,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="output-confermation">
   <template>
-    <style>
-      :host {
-        display: block;
+  <style>
+  :host {
+    display: block;
+margin-top: 30px;
+    @apply(--layout-vertical);
+    @apply(--layout-center-justified);
+  }
+  .conferma{
+    margin: 15px;
+  }
+  </style>
+  <div class="conferma">La prenotazione é stata effettuata. <br><br> Le é stata inviata una mail con:<br>
+    <ul>
+      <li>Le norme di buona preparazione</li>
+      <li>Il link per il pagamento del ticket online</li>
+      <li>Il link per il ritiro del referto online</li>
+    </ul>
+  </div>
+</template>
+<script>
+(function() {
+  'use strict';
 
-        @apply(--layout-vertical);
-     @apply(--layout-center-justified);
-      }
-      .conferma{
-        margin: 15px;
-      }
-    </style>
-    <div class="conferma">La prenotazione é stata effettuata</div>
-  </template>
-  <script>
-  (function() {
-    'use strict';
+  Polymer({
+    is: 'output-confermation',
 
-    Polymer({
-      is: 'output-confermation',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'output-confermation',
-          notify: true
-        }
+    properties: {
+      foo: {
+        type: String,
+        value: 'output-confermation',
+        notify: true
       }
-    });
-  })();
-  </script>
+    }
+  });
+})();
+</script>
 </dom-module>
