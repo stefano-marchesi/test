@@ -24,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   paper-material{
     max-width: 600px;
-    height: 100%;
-    max-height: 700px;
+    height: 600px;
+
     @apply(--layout-flex);
   }
 
@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     properties: {
       selected:{
         type: Number,
-        value: 0
+        value: 2
       },
       nreStatus:{
         type: Number,
@@ -128,6 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.transactioninfo.mail = this.$.inputmail.mail;
         this.selected=2;
         this.$.inputdate.esame=this.transactioninfo.datanre.esame;
+        this.$.inputdate.mail=this.transactioninfo.mail;
         this.dateStatus=2;
       }
     },

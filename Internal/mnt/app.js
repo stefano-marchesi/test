@@ -37,6 +37,7 @@ var hash = Math.floor((Math.random() * 10000));
       var exec = require('child_process').exec;
       var child = exec(curl,
         function(error, stdout, stderr)  {
+          console.log(curl);
           res.send(
             {mailsent:true,
             verifycationcode:  hash}

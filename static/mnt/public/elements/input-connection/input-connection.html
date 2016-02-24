@@ -17,7 +17,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style>
   :host {
     display: block;
-
     margin: 10px;
     @apply(--layout-vertical);
     @apply(--layout-center);
@@ -27,16 +26,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     display: none;
   }
 
-  .title{
+  paper-spinner-lite {
+    margin: 15px;
+  }
+
+  #emailinput{
+    min-width: 300px;
+  }
+
+  #title{
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  paper-fab{
-    background-color: green;
-    margin-top: 10px;
-    margin-right: 10px;
-  }
   </style>
 
   <iron-ajax
@@ -54,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   handle-as="json"
   on-response="verified"
   last-response="{{dates}}"></iron-ajax>
-  <h3 class="title">
+  <h3 id="title">
     Inserire E-mail
   </h3>
 
@@ -70,10 +72,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </div>
   <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised> <iron-icon icon="drafts"></iron-icon>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner"  active></paper-spinner-lite>
-
+  <paper-icon-button id="refresh" icon="refresh" on-tap="refresh" ></paper-icon-button>
 
   <div class="layout horizontal">
-
     <paper-input
     id="authcode"
     label="Codice Conferma"
@@ -117,6 +118,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     },
 
+    refresh: function(){
+      this.mail= '';
+      this.status = 1;
+    },
+
     mailchange:function(){
       if ( this.$.emailinput.validate() ){
         this.$.emailinputbutton.toggleAttribute('disabled', false);
@@ -129,64 +135,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }else{this.$.authcodebutton.toggleAttribute('disabled', true);}
     },
 
-    addmail: function(){
-      this.mail = 'stefano.marchesi1984@gmail.com';
-    },
-
-    addpin: function(){
-      this.pin = '16543';
-    },
-    statusChange: function(newValue) {
-      switch (newValue) {
-        case 1:
-        this.$.emailinput.toggleAttribute('disabled', false);
-        this.$.emailinputbutton.toggleAttribute('disabled', true);
-        this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleClass('invisible', true);
-        this.$.authcodebutton.toggleClass('invisible', true);
-        this.$.authcodespinner.toggleClass('invisible', true);
-        this.$.emailinput.focus();
-        break;
-
-        case 2:
-        this.$.emailinput.toggleAttribute('disabled', true);
-        this.$.emailinputbutton.toggleAttribute('disabled', true);
-        this.$.emailinputspinner.toggleClass('invisible', false);
-        this.$.authcode.toggleClass('invisible', true);
-        this.$.authcodebutton.toggleClass('invisible', true);
-        this.$.authcodespinner.toggleClass('invisible', true);
-        break;
-
-        case 3:
-        this.$.emailinput.toggleAttribute('disabled', true);
-        this.$.emailinputbutton.toggleAttribute('disabled', true);
-        this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleClass('invisible', false);
-        this.$.authcodebutton.toggleClass('invisible', false);
-        this.$.authcodespinner.toggleClass('invisible', true);
-        this.$.authcode.focus();
-        break;
-
-        case 4:
-        this.$.emailinput.toggleAttribute('disabled', true);
-        this.$.emailinputbutton.toggleAttribute('disabled', true);
-        this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleClass('invisible', false);
-        this.$.authcodebutton.toggleClass('invisible', false);
-        this.$.authcode.toggleAttribute('disabled', true);
-        this.$.authcodebutton.toggleAttribute('disabled', true);
-        this.$.authcodespinner.toggleClass('invisible', false);
-        break;
-
-        default:
-        this.$.emailinput.toggleAttribute('disabled', false);
-        this.$.emailinputbutton.toggleAttribute('disabled', false);
-        this.$.emailinputspinner.toggleClass('invisible', true);
-        this.$.authcode.toggleAttribute('disabled', true);
-        this.$.authcodebutton.toggleAttribute('disabled', true);
-        this.$.authcodespinner.toggleClass('invisible', true);
-      }
-    },
     verify:function(){
       if (this.dates.verifycationcode == this.pin) {
         this.status=10;
@@ -210,6 +158,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     mailsent:function(){
       this.status=3;
       console.log(this.dates);
+    },
+
+
+    statusChange: function(newValue) {
+      switch (newValue) {
+        case 1:
+        this.$.title.innerHTML="Inserire email"
+        this.$.emailinput.toggleAttribute('disabled', false);
+        this.$.emailinputbutton.toggleAttribute('disabled', true);
+        this.$.emailinputbutton.toggleClass('invisible', false);
+        this.$.emailinputspinner.toggleClass('invisible', true);
+        this.$.emailinput.focus();
+        this.$.authcode.toggleClass('invisible', true);
+        this.$.authcodebutton.toggleClass('invisible', true);
+        this.$.authcodespinner.toggleClass('invisible', true);
+        this.$.refresh.toggleClass('invisible', true);
+        break;
+
+        case 2:
+        this.$.title.innerHTML=""
+        this.$.emailinput.toggleAttribute('disabled', true);
+        this.$.emailinputbutton.toggleAttribute('disabled', true);
+        this.$.emailinputspinner.toggleClass('invisible', false);
+        this.$.authcode.toggleClass('invisible', true);
+        this.$.authcodebutton.toggleClass('invisible', true);
+        this.$.authcodespinner.toggleClass('invisible', true);
+        this.$.refresh.toggleClass('invisible', true);
+        break;
+
+        case 3:
+        this.$.title.innerHTML="Inserire Inserire codice di verifica"
+        this.$.emailinput.toggleAttribute('disabled', true);
+        this.$.emailinputbutton.toggleAttribute('disabled', true);
+        this.$.emailinputbutton.toggleClass('invisible', true);
+        this.$.emailinputspinner.toggleClass('invisible', true);
+        this.$.authcode.toggleClass('invisible', false);
+        this.$.authcodebutton.toggleClass('invisible', false);
+        this.$.authcodespinner.toggleClass('invisible', true);
+        this.$.refresh.toggleClass('invisible', false);
+        this.$.authcode.focus();
+        break;
+
+        case 4:
+
+        this.$.emailinput.toggleAttribute('disabled', true);
+        this.$.emailinputbutton.toggleAttribute('disabled', true);
+        this.$.emailinputspinner.toggleClass('invisible', true);
+        this.$.authcode.toggleClass('invisible', false);
+        this.$.authcodebutton.toggleClass('invisible', false);
+        this.$.authcode.toggleAttribute('disabled', true);
+        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcodespinner.toggleClass('invisible', false);
+              this.$.refresh.toggleClass('invisible', true);
+        break;
+
+        default:
+        this.$.emailinput.toggleAttribute('disabled', false);
+        this.$.emailinputbutton.toggleAttribute('disabled', false);
+        this.$.emailinputspinner.toggleClass('invisible', true);
+        this.$.authcode.toggleAttribute('disabled', true);
+        this.$.authcodebutton.toggleAttribute('disabled', true);
+        this.$.authcodespinner.toggleClass('invisible', true);
+      }
     }
   });
 })();

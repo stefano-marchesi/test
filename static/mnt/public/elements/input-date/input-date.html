@@ -11,64 +11,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="input-date">
-  <style is="custom-style" include="shared-styles"></style>
-  <template>
-  <style>
-  :host {
-    display: block;
+<style is="custom-style" include="shared-styles"></style>
+<template>
+<style>
+:host {
+  display: block;
 
-    margin: 10px;
-    @apply(--layout-vertical);
-    @apply(--layout-center);
-    @apply(layout-around-justified);
+  margin: 10px;
+  @apply(--layout-vertical);
+  @apply(--layout-center);
+  @apply(layout-around-justified);
 
-  }
-  paper-material{
-    margin: 10px;
+}
 
-    padding: 15px;
-    @apply(--layout-horizontal);
-    @apply(--layout-center);
-  }
+.item{
 
-  .line{
-   @apply(--layout-flex);
-   margin-right: 15px;
-  }
+margin-bottom: 10px;
+  width: 220px;
+}
+paper-material{
+  padding: 15px;
+  @apply(--layout-horizontal);
+  @apply(--layout-center);
+}
+iron-list{
+  width: 300px;
+  height: 400px;
+}
+.line{
+  @apply(--layout-flex);
+  margin-right: 15px;
+}
 
-  .info{
-    margin: 5px;
-  }
-  .invisible{
-    display: none;
-  }
-  </style>
+.info{
+  margin: 5px;
+}
+.invisible{
+  display: none;
+}
+</style>
 
-  <iron-ajax
-  id="ricercadate"
-  method="POST"
-  content-type="application/json"
-  handle-as="json"
-  on-response="daterecived"
-  last-response="{{dates}}"></iron-ajax>
+<iron-ajax
+id="ricercadate"
+method="POST"
+content-type="application/json"
+handle-as="json"
+on-response="daterecived"
+last-response="{{dates}}"></iron-ajax>
 
-  <iron-ajax
-  id="prenota"
-  method="POST"
-  content-type="application/json"
-  handle-as="json"
-  on-response="confermato"
-  ></iron-ajax>
+<iron-ajax
+id="prenota"
+method="POST"
+content-type="application/json"
+handle-as="json"
+on-response="confermato"
+></iron-ajax>
 
 
 
-  <h3 class="title">
-    Scegliere una data per l'esame
-  </h3>
-  <paper-listbox id="datelist">
-    <template  is="dom-repeat" items="{{dates}}">
-      <paper-item>
-        <paper-material elevation="2">
+<h3 class="title">
+  Scegliere una data per l'esame
+</h3>
+<iron-list id="datelist" items="{{dates}}" as="item">
+  <template  is="dom-repeat" items="{{dates}}">
+
+    <div class="item">
+
+      <paper-material class="item" elevation="2">
 
         <div class="line">
           <div class="info">
@@ -79,16 +88,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </div>
         <paper-fab icon="done" class="success"  on-click="prenota"></paper-fab>
-        </paper-material>
-
-      </paper-item>
-    </template>
-
-  </paper-listbox>
+      </paper-material>
+    </div>
 
 
-  <paper-spinner-lite id="calendarspinner" active></paper-spinner-lite>
+  </template>
 
+</iron-list>
+
+
+<paper-spinner-lite id="calendarspinner" active></paper-spinner-lite>
+
+<paper-dialog id="conferma" with-backdrop>
+  <h2>L'accendiamo?</h2>
+  <div>
+    conferma di voler prenotare in data: <span>{{chosendate.data}}</span> alle ore: <span>{{chosendate.ora}}</span>?
+  </div>
+  <div class="buttons">
+    <paper-button dialog-dismiss>Annulla</paper-button>
+    <paper-button  on-tap="conferma" >Conferma</paper-button>
+  </div>
+</paper-dialog>
 
 </template>
 <script>
@@ -112,9 +132,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       esame: {
         type: Object
+      },
+      mail: {
+        type: String
       }
 
     },
+
 
 
     statusChange: function(newValue) {
@@ -150,12 +174,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     daterecived:function(){
       this.status=3;
     },
-
-    prenota:function(e){
-      this.chosendate=e.model.get('item');
-      this.$.prenota.body={chosendate: this.chosendate};
+    conferma:function () {
+      this.$.prenota.body={chosendate: this.chosendate, mail: this.mail};
       this.$.prenota.generateRequest();
       this.status=4;
+      this.$.conferma.close();
+
+    },
+
+      prenota:function(e){
+      this.chosendate=e.model.get('item');
+      this.$.conferma.open();
+
     },
     attached: function(){
       this.$.ricercadate.url=this.baseUrl+':3000/caf/ricercadate';
