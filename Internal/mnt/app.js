@@ -13,11 +13,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
+var codeCreator = function(){
+  var cod = Math.floor((Math.random() * 10000));
+  if (cod<1000){cod +=5000;}
+  return cod
+};
 
 app.post('/sendmail', function (req, res) {
 
-var hash = Math.floor((Math.random() * 10000));
+var hash = codeCreator();
 
   var url= 'https://api.mailgun.net/v3/sandboxfb6330fa39d04b2cbd6cca03b4b5df40.mailgun.org/messages';
   var key = 'api:key-789ffeeea599b8c7f8030d4572dc56ad';
