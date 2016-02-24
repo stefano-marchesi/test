@@ -30,14 +30,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     margin: 15px;
   }
 
+.ref{
+@apply(--layout-self-center);
+margin-left: 5px;
+}
+
   #emailinput{
-    min-width: 300px;
+    min-width: 250px;
+    margin-bottom: 30px;
   }
 
   #title{
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 20px;
   }
+
+  #authcode{
+    margin-bottom: 30px;
+  }
+
+
 
   </style>
 
@@ -56,12 +68,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   handle-as="json"
   on-response="verified"
   last-response="{{dates}}"></iron-ajax>
+
+
   <h3 id="title">
     Inserire E-mail
   </h3>
 
 
-  <div class="layout horizontal">
+  <div class=" email layout horizontal">
+
 
     <gold-email-input
     id="emailinput"
@@ -69,12 +84,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     label="email"
     value="{{mail}}"
     required></gold-email-input>
+
+    <div class="ref">
+
+      <paper-icon-button id="refresh" icon="refresh" on-tap="refresh" ></paper-icon-button>
+    </div>
   </div>
   <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised> <iron-icon icon="drafts"></iron-icon>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner"  active></paper-spinner-lite>
-  <paper-icon-button id="refresh" icon="refresh" on-tap="refresh" ></paper-icon-button>
+
+
 
   <div class="layout horizontal">
+
+
     <paper-input
     id="authcode"
     label="Codice Conferma"
@@ -106,7 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       mail: {
         type: String,
-        value: '',
+        value: 'etrs@tdger',
         notify: true,
         observer: 'mailchange'
       },
@@ -188,7 +211,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         break;
 
         case 3:
-        this.$.title.innerHTML="Inserire Inserire codice di verifica"
+        this.$.title.innerHTML="Inserire codice di verifica"
         this.$.emailinput.toggleAttribute('disabled', true);
         this.$.emailinputbutton.toggleAttribute('disabled', true);
         this.$.emailinputbutton.toggleClass('invisible', true);

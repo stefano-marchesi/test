@@ -748,25 +748,36 @@
   <style is="custom-style" include="shared-styles"></style>
   <template>
 
-  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}.invisible{display:none;}paper-spinner-lite{margin:15px;}#emailinput{min-width:300px;}#title{margin-top:20px;margin-bottom:20px;}</style>
+  <style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}.invisible{display:none;}paper-spinner-lite{margin:15px;}.ref{@apply(--layout-self-center);margin-left:5px;}#emailinput{min-width:250px;margin-bottom:30px;}#title{margin-top:50px;margin-bottom:20px;}#authcode{margin-bottom:30px;}</style>
 
   <iron-ajax id="mailsender" method="POST" content-type="application/json" handle-as="json" on-response="mailsent" last-response="{{dates}}"></iron-ajax>
 
   <iron-ajax id="mailverifier" method="POST" content-type="application/json" handle-as="json" on-response="verified" last-response="{{dates}}"></iron-ajax>
+
+
   <h3 id="title">
     Inserire E-mail
   </h3>
 
 
-  <div class="layout horizontal">
+  <div class=" email layout horizontal">
+
 
     <gold-email-input id="emailinput" auto-validate="" label="email" value="{{mail}}" required=""></gold-email-input>
+
+    <div class="ref">
+
+      <paper-icon-button id="refresh" icon="refresh" on-tap="refresh"></paper-icon-button>
+    </div>
   </div>
   <paper-button id="emailinputbutton" on-tap="sendmail" class="primary" raised=""> <iron-icon icon="drafts"></iron-icon>invia Email</paper-button>
   <paper-spinner-lite class="invisible" id="emailinputspinner" active=""></paper-spinner-lite>
-  <paper-icon-button id="refresh" icon="refresh" on-tap="refresh"></paper-icon-button>
+
+
 
   <div class="layout horizontal">
+
+
     <paper-input id="authcode" label="Codice Conferma" value="{{pin}}" char-counter="" maxlength="4" auto-validate="" pattern="[0-9]*" allowed-pattern="[0-9]" minlength="4" required=""></paper-input>
   </div>
   <paper-button id="authcodebutton" on-tap="verify" class="primary" raised="">Conferma</paper-button>
@@ -778,7 +789,7 @@
 <dom-module id="input-date" assetpath="elements/input-date/">
 <style is="custom-style" include="shared-styles"></style>
 <template>
-<style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}.item{margin-bottom:10px;width:220px;}paper-material{padding:15px;@apply(--layout-horizontal);@apply(--layout-center);}iron-list{width:300px;height:400px;}.line{@apply(--layout-flex);margin-right:15px;}.info{margin:5px;}.invisible{display:none;}</style>
+<style>:host{display:block;margin:10px;@apply(--layout-vertical);@apply(--layout-center);@apply(layout-around-justified);}.item{margin-bottom:10px;width:220px;}paper-material{padding:15px;@apply(--layout-horizontal);@apply(--layout-center);}iron-list{width:300px;height:400px;}.line{@apply(--layout-flex);margin-right:15px;}.navigazione{margin:10px;}.info{margin:5px;}.invisible{display:none;}.buttons{@apply(--layout-horizontal);@apply(--layout-around-justified);}</style>
 
 <iron-ajax id="ricercadate" method="POST" content-type="application/json" handle-as="json" on-response="daterecived" last-response="{{dates}}"></iron-ajax>
 
@@ -817,14 +828,15 @@
 <paper-spinner-lite id="calendarspinner" active=""></paper-spinner-lite>
 
 <paper-dialog id="conferma" with-backdrop="">
-  <h2>L'accendiamo?</h2>
+  <h2>Conferma</h2>
   <div>
-    conferma di voler prenotare in data: <span>{{chosendate.data}}</span> alle ore: <span>{{chosendate.ora}}</span>?
+    Conferma di voler prenotare in data: <span>{{chosendate.data}}</span> alle ore: <span>{{chosendate.ora}}</span>?
   </div>
   <div class="buttons">
-    <paper-button dialog-dismiss="">Annulla</paper-button>
-    <paper-button on-tap="conferma">Conferma</paper-button>
+    <paper-fab mini="" class="error navigazione" icon="clear" on-tap="dismiss"></paper-fab>
+    <paper-fab mini="" class="success navigazione" icon="check" on-tap="conferma"></paper-fab>
   </div>
+
 </paper-dialog>
 
 </template>
@@ -844,7 +856,7 @@
 <dom-module id="prenotazioni-esterni" assetpath="elements/prenotazioni-esterni/">
   <template>
 
-  <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;}paper-material{max-width:600px;height:600px;@apply(--layout-flex);}.primalinea{font-size:25px;}.centrale{margin-left:auto;margin-right:auto;}.secondalinea{font-size:20px;}paper-material{margin-top:20px;}}</style>
+  <style>:host{display:block;@apply(--layout-horizontal);@apply(--layout-center-justified);height:100%;max-height:700px;}paper-material{max-width:600px;height:700px;@apply(--layout-flex);}.primalinea{font-size:25px;}.centrale{margin-left:auto;margin-right:auto;}.secondalinea{font-size:20px;}paper-material{margin-top:20px;}}</style>
 
 <paper-material elevation="2">
 

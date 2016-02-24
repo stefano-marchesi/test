@@ -18,13 +18,11 @@ app.post('/ricercadate', function (req, res) {
 
     console.log('Caf dice: '+JSON.stringify(req.body));
     res.send(
-      [{data:'15/12/2015', id:'542138', ora:'15:30'},
-      {data:'16/12/2015', id:'556138', ora:'12:00'},
-      {data:'17/12/2015', id:'542838', ora:'9:40'},
-      {data:'18/12/2015', id:'742138', ora:'17:10'}]
+      [{data:'09/03/2016', id:'542838', ora:'9:40'},
+      {data:'18/03/2016', id:'556138', ora:'17:20'},
+      {data:'12/08/2016', id:'542138', ora:'19:40'}
+      ]
     );
-
-
   }, 10);
 });
 

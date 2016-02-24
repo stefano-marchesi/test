@@ -42,13 +42,20 @@ iron-list{
   @apply(--layout-flex);
   margin-right: 15px;
 }
-
+.navigazione{
+  margin: 10px;
+}
 .info{
   margin: 5px;
 }
 .invisible{
   display: none;
 }
+.buttons{
+  @apply(--layout-horizontal);
+@apply(--layout-around-justified);
+}
+
 </style>
 
 <iron-ajax
@@ -100,14 +107,15 @@ on-response="confermato"
 <paper-spinner-lite id="calendarspinner" active></paper-spinner-lite>
 
 <paper-dialog id="conferma" with-backdrop>
-  <h2>L'accendiamo?</h2>
+  <h2>Conferma</h2>
   <div>
-    conferma di voler prenotare in data: <span>{{chosendate.data}}</span> alle ore: <span>{{chosendate.ora}}</span>?
+    Conferma di voler prenotare in data: <span>{{chosendate.data}}</span> alle ore: <span>{{chosendate.ora}}</span>?
   </div>
   <div class="buttons">
-    <paper-button dialog-dismiss>Annulla</paper-button>
-    <paper-button  on-tap="conferma" >Conferma</paper-button>
+    <paper-fab mini class="error navigazione" icon="clear" on-tap="dismiss"></paper-fab>
+    <paper-fab mini class="success navigazione" icon="check" on-tap="conferma"></paper-fab>
   </div>
+
 </paper-dialog>
 
 </template>
@@ -166,7 +174,6 @@ on-response="confermato"
       this.$.ricercadate.body={esame: this.esame};
       this.$.ricercadate.generateRequest();
     },
-
     confermato:function(){
       this.status=10;
     },
@@ -174,6 +181,12 @@ on-response="confermato"
     daterecived:function(){
       this.status=3;
     },
+
+    dismiss: function(){
+        this.chosendate={};
+      this.$.conferma.close();
+    },
+
     conferma:function () {
       this.$.prenota.body={chosendate: this.chosendate, mail: this.mail};
       this.$.prenota.generateRequest();
