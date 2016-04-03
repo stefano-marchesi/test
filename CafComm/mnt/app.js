@@ -37,7 +37,7 @@ app.post('/prenota', function (req, res) {
     var senrer = 'mrc@ospedale.com' ;
     var reciver = req.body.mail;
     var subject = 'Conferma prenotazione esame';
-    var text = 'Esame prenotato in data ' + req.body.chosendate.data + ' alle ore '+ req.body.chosendate.ora+'. Legga le norme di buona preparazione alla pagina XXX, paghi il ticket alla pagina XXX e quando il referto sarà pronto potrà ritirarlo alla pagina XXX';
+    var text = 'Esame prenotato in data ' + req.body.chosendate.data + ' alle ore '+ req.body.chosendate.ora+'. Legga le norme di buona preparazione alla pagina _ _ _, paghi il ticket alla pagina _ _ _. Quando il referto sarà pronto potrà ritirarlo alla pagina _ _ _';
 
 
     var curl = 'curl -s --user \''+key +'\' \
